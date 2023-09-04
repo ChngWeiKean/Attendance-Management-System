@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
     <ImageView
         android:layout_width="125dp"
@@ -30,20 +30,33 @@
             android:padding="24dp">
 
             <TextView
-                android:id="@+id/loginText"
+                android:id="@+id/registerText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="Register"
                 android:textAlignment="center"
                 android:textColor="@color/purple"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
+                android:background="@drawable/card_shape"
+                android:drawableLeft="@drawable/account_icon"
+                android:drawablePadding="8dp"
+                android:hint="Username"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/cardview_dark_background" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/card_shape"
                 android:drawableLeft="@drawable/email_icon"
                 android:drawablePadding="8dp"
@@ -66,51 +79,39 @@
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/cardview_dark_background" />
 
-            <RelativeLayout
+            <EditText
+                android:id="@+id/confirmPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <CheckBox
-                    android:id="@+id/remember_me"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remember Me"
-                    android:layout_alignParentStart="true"
-                    android:textColor="@color/purple"
-                    android:textSize="14sp"/>
-
-                <TextView
-                    android:id="@+id/forgotPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:text="Forgot Password?"
-                    android:onClick="openForgotPasswordPage"
-                    android:textColor="@color/purple"
-                    android:textSize="14sp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/card_shape"
+                android:drawableLeft="@drawable/lock_icon"
+                android:drawablePadding="8dp"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/cardview_dark_background" />
 
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/registerButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/purple"
-                android:text="Log In"
+                android:text="Register"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/signupText"
+        android:id="@+id/loginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:clickable="true"
-        android:onClick="openRegistrationPage"
+        android:onClick="openLoginPage"
         android:padding="8dp"
         android:text="Don't have an account? Register Here"
         android:textAlignment="center"
