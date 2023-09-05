@@ -37,20 +37,22 @@
                 android:textAlignment="center"
                 android:textColor="@color/purple"
                 android:textSize="36sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/font_family"/>
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/card_shape"
                 android:drawableLeft="@drawable/email_icon"
                 android:drawablePadding="8dp"
                 android:hint="Email"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background" />
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:fontFamily="@font/font_family"/>
 
             <EditText
                 android:id="@+id/password"
@@ -64,7 +66,8 @@
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background" />
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:fontFamily="@font/font_family"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -77,7 +80,8 @@
                     android:text="Remember Me"
                     android:layout_alignParentStart="true"
                     android:textColor="@color/purple"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:fontFamily="@font/font_family"/>
 
                 <TextView
                     android:id="@+id/forgotPassword"
@@ -89,7 +93,8 @@
                     android:textColor="@color/purple"
                     android:textSize="14sp"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"/>
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/font_family"/>
             </RelativeLayout>
 
             <Button
@@ -100,7 +105,8 @@
                 android:backgroundTint="@color/purple"
                 android:text="Log In"
                 android:textSize="18sp"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="20dp"
+                android:fontFamily="@font/font_family"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -115,5 +121,6 @@
         android:text="Don't have an account? Register Here"
         android:textAlignment="center"
         android:textColor="@color/purple"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:fontFamily="@font/font_family"/>
 </LinearLayout>
