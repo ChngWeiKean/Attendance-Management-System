@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StudentDashboardActivity" >
+
+    <!-- Toolbar with Sidebar Menu Icon and Text -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <!-- Sidebar Menu Icon -->
+        <ImageView
+            android:id="@+id/sidebar_menu_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/sidebar_menu_icon"
+            android:contentDescription="Menu"
+            android:layout_gravity="start"
+            android:onClick="openSidebar" />
+
+        <!-- Text -->
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dashboard"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="start"
+            android:layout_marginStart="32dp" />
+
+        <!-- Button -->
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course Enrolment"
+            android:layout_centerInParent="true"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:onClick="courseEnrolment" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:layout_below="@id/toolbar"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+</RelativeLayout>

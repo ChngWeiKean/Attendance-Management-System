@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="16dp" >
+
+    <!-- App Logo -->
+    <ImageView
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/checkmate_logo"
+        android:contentDescription="CheckMate Logo" />
+
+    <!-- Sidebar Items -->
+    <!-- First Nested LinearLayout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="48dp"
+            android:src="@drawable/dashboard_icon"
+            android:contentDescription="Dashboard Icon"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:background="@android:color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Dashboard"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <!-- Second Nested LinearLayout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="48dp"
+            android:src="@drawable/qr_scanner_icon"
+            android:contentDescription="QR Scanner Icon"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:background="@android:color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="QR Scanner"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <!-- Third Nested LinearLayout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="48dp"
+            android:src="@drawable/event_icon"
+            android:contentDescription="Event Icon"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:background="@android:color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Events"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </View>
+
+    <!-- User Profile -->
+    <ImageView
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:contentDescription="User Profile"
+        android:background="@drawable/circle_button"
+        android:clickable="true"
+        android:onClick="onUserProfileClick" >
+    </ImageView>
+
+    <!-- Logout Button -->
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Logout"
+        android:textColor="#ffffff"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:onClick="onLogoutClick" >
+    </Button>
+
+</LinearLayout>
+
