@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 import android.content.Intent;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
     EditText email;
@@ -120,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
     private void redirectToDashboard(String userType) {
         if ("student".equalsIgnoreCase(userType)) {
             // Redirect to the student dashboard
-            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+            startActivity(new Intent(MainActivity.this, StudentDashboardActivity.class));
+            Log.d("TAG", "student dashboard");
         } else if ("lecturer".equalsIgnoreCase(userType)) {
             // Redirect to the lecturer dashboard
             startActivity(new Intent(MainActivity.this, RegisterActivity.class));
