@@ -1,9 +1,13 @@
 package com.example.attendancemanagementsystem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,6 +19,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,6 +35,8 @@ import java.util.List;
 
 public class StudentClassEnrolmentActivity extends AppCompatActivity {
 
+    public DrawerLayout drawerLayout;
+    public ActionBarDrawerToggle actionBarDrawerToggle;
     private SharedPreferences sharedPreferences;
     private DatabaseReference studentEnrollmentsRef;
     private DatabaseReference userRef;
@@ -38,6 +45,15 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_course_enrolment);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(findViewById(R.id.toolbar));
+
+        drawerLayout = findViewById(R.id.nav);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
@@ -233,7 +249,7 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
         TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, weight);
         textView.setLayoutParams(layoutParams);
         textView.setTypeface(ResourcesCompat.getFont(this, R.font.font_family));
-        textView.setPadding(8, 8, 8, 8);
+        textView.setPadding(20, 8, 8, 8);
         return textView;
     }
 
@@ -245,5 +261,23 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
         button.setTypeface(ResourcesCompat.getFont(this, R.font.font_family));
         button.setPadding(8, 8, 8, 8);
         return button;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Pass the event to the ActionBarDrawerToggle
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

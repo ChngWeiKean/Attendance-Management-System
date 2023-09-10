@@ -26,8 +26,10 @@
             android:name=".StudentDashboardActivity"
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
-
-        <activity android:name=".StudentClassEnrolmentActivity"></activity>
+        <activity
+            android:name=".StudentClassEnrolmentActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
     </application>
 
 </manifest>
