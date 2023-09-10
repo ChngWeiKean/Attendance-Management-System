@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".StudentClassEnrolmentActivity" >
+
+        <!-- Toolbar with Sidebar Menu Icon and Text -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <!-- Sidebar Menu Icon -->
+            <ImageView
+                android:id="@+id/sidebar_menu_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/sidebar_menu_icon"
+                android:contentDescription="Menu"
+                android:layout_gravity="start"
+                android:onClick="openSidebar" />
+
+            <!-- Text -->
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Course Enrolment"
+                android:fontFamily="@font/font_family"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="start"
+                android:layout_marginStart="25dp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/toolbar"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/purple" />
+
+        <TextView
+            android:id="@+id/current_enrolment_table_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current Enrolment"
+            android:layout_below="@id/toolbar"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/font_family"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/current_enrolment_table_title"
+            android:id="@+id/current_enrolment_table">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Code"
+                    android:fontFamily="@font/font_family"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="#79c5f7" /> <!-- Header cell style -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Course Name"
+                    android:fontFamily="@font/font_family"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:padding="8dp"
+                    android:background="#79c5f7" /> <!-- Header cell style -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Action"
+                    android:fontFamily="@font/font_family"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="#79c5f7" /> <!-- Header cell style -->
+            </TableRow>
+
+            <View
+                android:id="@+id/current_enrolment_table_header_line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@id/current_enrolment_table"
+                android:background="@drawable/header_line_style" />
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/available_enrolment_table_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Available Enrolment"
+            android:layout_below="@id/current_enrolment_table"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/font_family"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/available_enrolment_table_title"
+            android:id="@+id/available_enrolment_table">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Code"
+                    android:fontFamily="@font/font_family"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="#79c5f7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Course Name"
+                    android:fontFamily="@font/font_family"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:padding="8dp"
+                    android:background="#79c5f7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Action"
+                    android:fontFamily="@font/font_family"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="#79c5f7" />
+            </TableRow>
+
+            <View
+                android:id="@+id/available_enrolment_table_header_line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@id/current_enrolment_table"
+                android:background="@drawable/header_line_style" />
+
+        </TableLayout>
+
+    </RelativeLayout>
+</ScrollView>

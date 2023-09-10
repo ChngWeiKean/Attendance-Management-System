@@ -13,6 +13,7 @@ import android.text.method.LinkMovementMethod;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.CheckBox;
@@ -69,10 +70,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        rememberMeCheckBox.setOnClickListener(new View.OnClickListener() {
+        rememberMeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                boolean isChecked = rememberMeCheckBox.isChecked();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Save the "Remember Me" preference when the CheckBox state changes
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("rememberMe", isChecked);
@@ -97,6 +97,22 @@ public class MainActivity extends AppCompatActivity {
                         if (user != null && user.getPassword().equals(userPassword)) {
                             // Password matches, login successful
                             String userType = user.getUserType();
+                            rememberMeCheckBox = findViewById(R.id.remember_me);
+                            // Load the "Remember Me" preference and set the CheckBox state
+                            boolean rememberMe = sharedPreferences.getBoolean("rememberMe", false);
+                            rememberMeCheckBox.setChecked(rememberMe);
+
+                            sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            // If "Remember Me" is checked, auto-login
+                            if (rememberMe) {
+                                editor.putString("userEmail", user.getEmail());
+                                editor.putString("userPassword", user.getPassword());
+                            }
+
+                            editor.putString("userId", user.getId());
+                            editor.apply();
                             // Redirect user to the appropriate dashboard based on userType
                             redirectToDashboard(userType);
                             return; // Exit the loop

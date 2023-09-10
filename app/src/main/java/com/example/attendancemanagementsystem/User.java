@@ -1,11 +1,15 @@
 package com.example.attendancemanagementsystem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String username;
     private String email;
     private String password;
     private String id;
     private String userType;
+    private List<String> courses;
 
     public User() {}
 
@@ -15,6 +19,7 @@ public class User {
         this.password = password;
         this.id = id;
         this.userType = userType;
+        this.courses= new ArrayList<>();
     }
 
     public String getUsername() {
@@ -55,5 +60,21 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<String> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<String> courses) {
+        this.courses = courses;
+    }
+
+    public void addCourseId(String classId) {
+        courses.add(classId);
+    }
+
+    public void removeCourseId(String classId) {
+        courses.remove(classId);
     }
 }

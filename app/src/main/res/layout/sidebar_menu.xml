@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    android:padding="16dp" >
+    android:padding="16dp"
+    android:id="@+id/nav_drawer" >
 
     <!-- App Logo -->
     <ImageView
@@ -26,6 +27,7 @@
         android:orientation="horizontal" >
 
         <ImageView
+            android:id="@+id/dashboard_icon"
             android:layout_width="36dp"
             android:layout_height="48dp"
             android:src="@drawable/dashboard_icon"
@@ -33,6 +35,7 @@
             android:layout_gravity="center_vertical" />
 
         <Button
+            android:id="@+id/dashboard_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start|center_vertical"
@@ -42,7 +45,6 @@
             android:text="Dashboard"
             android:textColor="#000000"
             android:textSize="18sp" />
-
     </LinearLayout>
 
     <!-- Second Nested LinearLayout -->
