@@ -22,7 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".StudentDashboardActivity"></activity>
+        <activity
+            android:name=".StudentDashboardActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+
+        <activity android:name=".StudentClassEnrolmentActivity"></activity>
     </application>
 
 </manifest>
