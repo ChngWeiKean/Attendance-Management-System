@@ -50,6 +50,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/sidebar"/>
+        app:menu="@menu/sidebar"
+        android:maxWidth="250dp"
+        app:itemIconTint="@color/purple"
+        app:itemIconSize="30dp"
+        app:itemIconPadding="30dp"
+        app:itemVerticalPadding="15dp"
+        app:headerLayout="@layout/checkmate_logo_menu"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
