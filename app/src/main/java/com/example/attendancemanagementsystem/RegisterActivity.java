@@ -1,5 +1,13 @@
 package com.example.attendancemanagementsystem;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -7,13 +15,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-import android.util.Log;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -41,8 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Get user input
                 String username = usernameEditText.getText().toString();
-                String email = emailEditText.getText().toString().toLowerCase(); // Convert email to lowercase
-                String id = idEditText.getText().toString().toLowerCase(); // Convert id to lowercase
+                String email = emailEditText.getText().toString().toLowerCase();
+                String id = idEditText.getText().toString().toLowerCase();
                 String password = passwordEditText.getText().toString();
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -80,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                 // Registration successful
                                                 Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
                                                 Log.d("RegisterActivity", "Registration Successful!");
+                                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                                             } catch (Exception e) {
                                                 // Registration failed, handle the error (e.g., username already exists)
                                                 Toast.makeText(RegisterActivity.this, "Registration Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();

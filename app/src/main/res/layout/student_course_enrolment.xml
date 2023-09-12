@@ -100,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="1dp"
                         android:layout_below="@id/current_enrolment_table"
-                        android:background="@drawable/header_line_style" />
+                        android:background="@color/purple" />
 
                 </TableLayout>
 
@@ -161,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="1dp"
                         android:layout_below="@id/current_enrolment_table"
-                        android:background="@drawable/header_line_style" />
+                        android:background="@color/purple" />
                 </TableLayout>
             </RelativeLayout>
         </ScrollView>
