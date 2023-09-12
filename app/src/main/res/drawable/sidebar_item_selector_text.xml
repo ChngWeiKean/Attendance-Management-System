@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <!-- Use white text when checked -->
+        <color android:color="@color/white" />
+    </item>
+    <item>
+        <!-- Use black text by default -->
+        <color android:color="@color/purple" />
+    </item>
+</selector>

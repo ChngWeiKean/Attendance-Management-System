@@ -23,12 +23,29 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+
 import com.google.firebase.database.ValueEventListener;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.content.SharedPreferences;
+import android.content.Intent;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +68,29 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(findViewById(R.id.toolbar));
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                drawerLayout.closeDrawers();
+
+                if (menuItem.getItemId() == R.id.menu_dashboard) {
+                    startActivity(new Intent(StudentClassEnrolmentActivity.this, StudentDashboardActivity.class));
+                    /*
+                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentQRScannerActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_events) {
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentEventsActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_user_profile) {
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
+                     */
+                } else if (menuItem.getItemId() == R.id.menu_logout) {
+                    startActivity(new Intent(StudentClassEnrolmentActivity.this, MainActivity.class));
+                }
+                return true;
+            }
+        });
 
         drawerLayout = findViewById(R.id.nav);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -507,12 +547,14 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Pass the event to the ActionBarDrawerToggle
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 }
+
+

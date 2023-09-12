@@ -179,7 +179,7 @@
         app:itemIconSize="30dp"
         app:itemIconPadding="30dp"
         app:itemVerticalPadding="15dp"
-        app:headerLayout="@layout/checkmate_logo_menu"/>
+        app:headerLayout="@layout/checkmate_logo_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
