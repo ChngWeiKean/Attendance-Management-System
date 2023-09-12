@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.navigation.NavigationView;
+
 public class StudentDashboardActivity extends AppCompatActivity {
 
     public DrawerLayout drawerLayout;
@@ -28,6 +30,29 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(findViewById(R.id.toolbar));
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                drawerLayout.closeDrawers();
+
+                if (menuItem.getItemId() == R.id.menu_dashboard) {
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentDashboardActivity.class));
+                    /*
+                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentQRScannerActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_events) {
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentEventsActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_user_profile) {
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
+                     */
+                } else if (menuItem.getItemId() == R.id.menu_logout) {
+                    startActivity(new Intent(StudentDashboardActivity.this, MainActivity.class));
+                }
+                return true;
+            }
+        });
 
         drawerLayout = findViewById(R.id.nav);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -55,12 +80,10 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Pass the event to the ActionBarDrawerToggle
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
 
