@@ -5,15 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+
+import android.content.Intent;
+import android.os.Bundle;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Button;
-import android.content.Intent;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
@@ -74,6 +81,10 @@ public class StudentDashboardActivity extends AppCompatActivity {
                     startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
                      */
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
+                    // Implement logout
+                    // Clear the "Remember Me" preference
+                    getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().clear().apply();
+                    // Redirect to login page
                     startActivity(new Intent(StudentDashboardActivity.this, MainActivity.class));
                 }
                 return true;

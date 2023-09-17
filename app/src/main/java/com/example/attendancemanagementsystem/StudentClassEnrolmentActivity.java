@@ -29,23 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
-
 import com.google.firebase.database.ValueEventListener;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.content.SharedPreferences;
-import android.content.Intent;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +70,10 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
                     startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
                      */
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
+                    // Implement logout
+                    // Clear the "Remember Me" preference
+                    getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().clear().apply();
+                    // Redirect to login page
                     startActivity(new Intent(StudentClassEnrolmentActivity.this, MainActivity.class));
                 }
                 return true;
