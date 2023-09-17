@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".StudentDashboardActivity">
+    tools:context=".LecturerDashboardActivity">
 
     <LinearLayout
         android:id="@+id/home_content"
@@ -27,10 +27,10 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical" />
             <Button
-                android:id="@+id/course_enrolment_button"
+                android:id="@+id/create_course_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Course Enrolment"
+                android:text="Create Course"
                 android:layout_gravity="end"
                 android:layout_marginRight="5dp"
                 android:fontFamily="@font/font_family"
@@ -57,7 +57,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/student_sidebar"
+        app:menu="@menu/lecturer_sidebar"
         android:maxWidth="250dp"
         app:itemIconTint="@color/purple"
         app:itemIconSize="30dp"

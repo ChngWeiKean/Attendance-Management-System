@@ -2,4 +2,24 @@
     <string name="app_name"></string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string-array name="days_array">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+    </string-array>
+    <string-array name="course_time_array">
+        <item>8:00 a.m.</item>
+        <item>9:00 a.m.</item>
+        <item>10:00 a.m.</item>
+        <item>11:00 a.m.</item>
+        <item>12:00 p.m.</item>
+        <item>1:00 p.m.</item>
+        <item>2:00 p.m.</item>
+        <item>3:00 p.m.</item>
+        <item>4:00 p.m.</item>
+        <item>5:00 p.m.</item>
+        <item>6:00 p.m.</item>
+    </string-array>
 </resources>

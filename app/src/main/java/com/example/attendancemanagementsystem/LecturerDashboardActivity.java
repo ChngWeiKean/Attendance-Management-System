@@ -15,16 +15,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class StudentDashboardActivity extends AppCompatActivity {
+public class LecturerDashboardActivity extends AppCompatActivity {
 
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
-    Button courseEnrolmentButton;
+    Button createCourseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.student_dashboard);
+        setContentView(R.layout.lecturer_dashboard);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(findViewById(R.id.toolbar));
@@ -36,7 +36,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentDashboardActivity.class));
+                    startActivity(new Intent(LecturerDashboardActivity.this, LecturerDashboardActivity.class));
                     /*
                 } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
                     startActivity(new Intent(StudentDashboardActivity.this, StudentQRScannerActivity.class));
@@ -50,7 +50,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                     // Clear the "Remember Me" preference
                     getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().clear().apply();
                     // Redirect to login page
-                    startActivity(new Intent(StudentDashboardActivity.this, MainActivity.class));
+                    startActivity(new Intent(LecturerDashboardActivity.this, MainActivity.class));
                 }
                 return true;
             }
@@ -62,11 +62,11 @@ public class StudentDashboardActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        courseEnrolmentButton = findViewById(R.id.course_enrolment_button);
-        courseEnrolmentButton.setOnClickListener(new View.OnClickListener() {
+        createCourseButton = findViewById(R.id.create_course_button);
+        createCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(StudentDashboardActivity.this, StudentClassEnrolmentActivity.class));
+                startActivity(new Intent(LecturerDashboardActivity.this, LecturerCreateCourseActivity.class));
             }
         });
     }
@@ -88,4 +88,3 @@ public class StudentDashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
