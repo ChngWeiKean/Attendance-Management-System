@@ -17,24 +17,27 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dashboard"
+                android:layout_gravity="center_vertical"
                 android:fontFamily="@font/font_family"
+                android:text="Dashboard"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_vertical" />
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/course_enrolment_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Course Enrolment"
                 android:layout_gravity="end"
                 android:layout_marginRight="5dp"
+                android:backgroundTint="@color/purple"
                 android:fontFamily="@font/font_family"
-                android:backgroundTint="@color/purple" />
+                android:text="Course Enrolment" />
         </com.google.android.material.appbar.MaterialToolbar>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
@@ -42,6 +45,18 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/purple" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dashboard_cards_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            tools:listitem="@layout/student_dashboard_course_cards" >
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
