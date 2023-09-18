@@ -30,6 +30,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    // add packagingOptions block 'META-INF/NOTICE.md'
+    packagingOptions {
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/LICENSE-FIREBASE.txt")
+        exclude("META-INF/NOTICE.md")
+    }
+
 }
 
 dependencies {
@@ -45,5 +52,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database:20.0.0")
+    implementation("com.google.firebase:firebase-auth:21.0.1")
+    implementation("com.sun.mail:android-mail:1.6.7")
+    implementation("com.sun.mail:android-activation:1.6.7")
 
 }

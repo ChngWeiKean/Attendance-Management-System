@@ -82,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void openForgotPasswordPage(View view) {
+        startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
+    }
+
     private void authenticateUser(final String userEmail, final String userPassword) {
         // Firebase Realtime Database reference
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
