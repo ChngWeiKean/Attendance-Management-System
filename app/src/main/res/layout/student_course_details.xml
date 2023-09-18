@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nav"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".StudentCourseDetailsActivity">
+
+    <LinearLayout
+        android:id="@+id/home_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:fontFamily="@font/font_family"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/toolbar"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/purple" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1.75"
+                        android:layout_margin="20dp"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="10dp">
+
+
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1.25"
+                        android:layout_margin="20dp"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="10dp">
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1.75"
+                        android:layout_margin="20dp"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="10dp">
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/sessions_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sessions"
+                        android:layout_margin="16dp"
+                        android:fontFamily="@font/font_family"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sessions_table">
+
+                        <TableRow
+                            android:id="@+id/sessions_table_header"
+                            android:weightSum="4">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Date"
+                                android:fontFamily="@font/font_family"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_weight="2"
+                                android:padding="8dp"
+                                android:background="#79c5f7" /> <!-- Header cell style -->
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Start Time"
+                                android:fontFamily="@font/font_family"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_weight="0.5"
+                                android:padding="8dp"
+                                android:background="#79c5f7" /> <!-- Header cell style -->
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="End Time"
+                                android:fontFamily="@font/font_family"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_weight="0.5"
+                                android:padding="8dp"
+                                android:background="#79c5f7" /> <!-- Header cell style -->
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Status"
+                                android:fontFamily="@font/font_family"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_weight="1"
+                                android:padding="8dp"
+                                android:background="#79c5f7" /> <!-- Header cell style -->
+                        </TableRow>
+
+                        <View
+                            android:id="@+id/current_enrolment_table_header_line"
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/current_enrolment_table"
+                            android:background="@color/purple" />
+
+                    </TableLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/student_sidebar"
+        android:maxWidth="250dp"
+        app:itemIconTint="@color/purple"
+        app:itemIconSize="30dp"
+        app:itemIconPadding="30dp"
+        app:itemVerticalPadding="15dp"
+        app:headerLayout="@layout/checkmate_logo_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

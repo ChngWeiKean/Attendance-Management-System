@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class StudentDashboardRecyclerAdapter extends RecyclerView.Adapter<StudentDashboardRecyclerAdapter.ViewHolder> {
+public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEventRecyclerAdapter.ViewHolder> {
     private List<Course> courseList;
     private OnItemClickListener listener;
 
-    public StudentDashboardRecyclerAdapter(List<Course> courseList) {
+    public StudentEventRecyclerAdapter(List<Course> courseList) {
         this.courseList = courseList;
     }
 
@@ -53,7 +53,7 @@ public class StudentDashboardRecyclerAdapter extends RecyclerView.Adapter<Studen
     // Create new views.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_dashboard_course_cards, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_event_card, parent, false);
         return new ViewHolder(itemView);
     }
 
