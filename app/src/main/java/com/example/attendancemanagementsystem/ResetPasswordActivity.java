@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 public class ResetPasswordActivity extends AppCompatActivity {
 
     EditText newPasswordEditText;
+    EditText confirmPasswordEditText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
         // Get the new password from the user
         newPasswordEditText = findViewById(R.id.new_password);
         String newPassword = newPasswordEditText.getText().toString();
+        // Get confirm password from user
+        confirmPasswordEditText = findViewById(R.id.confirm_password);
+        String confirmPassword = confirmPasswordEditText.getText().toString();
+        // Ensure confirm password matches new password
+        if (!newPassword.equals(confirmPassword)) {
+            confirmPasswordEditText.setError("Passwords do not match");
+            return;
+        }
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
         // Find the user with the email
