@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -20,6 +21,7 @@ public class LecturerDashboardActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     Button createCourseButton;
+    TextView forgotPasswordText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,6 @@ public class LecturerDashboardActivity extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
                     startActivity(new Intent(LecturerDashboardActivity.this, LecturerDashboardActivity.class));
                     /*
-                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentQRScannerActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
                     startActivity(new Intent(StudentDashboardActivity.this, StudentEventsActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_user_profile) {
@@ -67,6 +67,13 @@ public class LecturerDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LecturerDashboardActivity.this, LecturerCreateCourseActivity.class));
+            }
+        });
+
+        forgotPasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LecturerDashboardActivity.this, ForgotPasswordActivity.class));
             }
         });
     }
