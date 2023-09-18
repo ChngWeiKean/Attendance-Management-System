@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lecturer_dashboard_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="8dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp" >
+
+        <ImageView
+            android:id="@+id/lecturer_dashboard_card_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/dashboard_card_image" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lecturer_dashboard_card_course_id"
+            android:layout_width="232dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/lecturer_dashboard_card_image"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="bold"
+            android:textColor="@color/purple"
+            android:textSize="26sp" >
+        </TextView>
+
+        <Button
+            android:id="@+id/lecturer_dashboard_card_edit_button"
+            android:contentDescription="Edit Button"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_below="@id/lecturer_dashboard_card_image"
+            android:layout_toRightOf="@id/lecturer_dashboard_card_course_id"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="12dp"
+            android:backgroundTint="@color/light_green"
+            android:background="@drawable/lecturer_dashboard_card_edit_button"
+            android:onClick="editCourse" >
+        </Button>
+
+        <Button
+            android:id="@+id/lecturer_dashboard_card_delete_button"
+            android:contentDescription="Delete Button"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_below="@id/lecturer_dashboard_card_image"
+            android:layout_toRightOf="@id/lecturer_dashboard_card_edit_button"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="12dp"
+            android:backgroundTint="@color/light_red"
+            android:background="@drawable/lecturer_dashboard_card_delete_button"
+            android:onClick="deleteCourse" >
+        </Button>
+
+        <TextView
+            android:id="@+id/lecturer_dashboard_card_course_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lecturer_dashboard_card_course_id"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="20sp" >
+        </TextView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

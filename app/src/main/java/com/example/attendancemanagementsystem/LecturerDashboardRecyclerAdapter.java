@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class StudentDashboardRecyclerAdapter extends RecyclerView.Adapter<StudentDashboardRecyclerAdapter.ViewHolder> {
+public class LecturerDashboardRecyclerAdapter extends RecyclerView.Adapter<LecturerDashboardRecyclerAdapter.ViewHolder> {
     private List<Course> courseList;
     private OnItemClickListener listener;
 
-    public StudentDashboardRecyclerAdapter(List<Course> courseList) {
+    public LecturerDashboardRecyclerAdapter(List<Course> courseList) {
         this.courseList = courseList;
     }
 
@@ -33,8 +33,8 @@ public class StudentDashboardRecyclerAdapter extends RecyclerView.Adapter<Studen
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            courseCodeTextView = itemView.findViewById(R.id.student_dashboard_card_course_id);
-            courseNameTextView = itemView.findViewById(R.id.student_dashboard_card_course_name);
+            courseCodeTextView = itemView.findViewById(R.id.lecturer_dashboard_card_course_id);
+            courseNameTextView = itemView.findViewById(R.id.lecturer_dashboard_card_course_name);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -52,14 +52,14 @@ public class StudentDashboardRecyclerAdapter extends RecyclerView.Adapter<Studen
 
     // Create new views.
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_dashboard_course_cards, parent, false);
-        return new ViewHolder(itemView);
+    public LecturerDashboardRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.lecturer_dashboard_course_cards, parent, false);
+        return new LecturerDashboardRecyclerAdapter.ViewHolder(itemView);
     }
 
     // Replace the contents of a view.
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(LecturerDashboardRecyclerAdapter.ViewHolder holder, int position) {
         Course course = courseList.get(position);
         holder.courseCodeTextView.setText(course.getCourseCode());
         holder.courseNameTextView.setText(course.getCourseName());

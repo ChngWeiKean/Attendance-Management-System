@@ -33,8 +33,8 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            courseCodeTextView = itemView.findViewById(R.id.dashboard_card_course_id);
-            courseNameTextView = itemView.findViewById(R.id.dashboard_card_course_name);
+            // courseCodeTextView = itemView.findViewById(R.id.dashboard_card_course_id);
+            // courseNameTextView = itemView.findViewById(R.id.dashboard_card_course_name);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

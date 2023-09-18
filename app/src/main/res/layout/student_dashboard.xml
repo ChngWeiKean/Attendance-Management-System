@@ -48,7 +48,7 @@
             android:background="@color/purple" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dashboard_cards_container"
+            android:id="@+id/student_dashboard_cards_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

@@ -163,7 +163,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         // Initialize and configure the RecyclerView.
-        RecyclerView recyclerView = findViewById(R.id.dashboard_cards_container);
+        RecyclerView recyclerView = findViewById(R.id.student_dashboard_cards_container);
         StudentDashboardRecyclerAdapter adapter = new StudentDashboardRecyclerAdapter(courseList);
 
         // Use a linear layout manager for the RecyclerView.
