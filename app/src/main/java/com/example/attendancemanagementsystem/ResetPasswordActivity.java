@@ -51,6 +51,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     userRef.child(userId).child("password").setValue(newPassword);
                     // Display success pop-up
                     newPasswordEditText.setError(null);
+                    // Remove verification code and email from shared preferences
+                    getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().remove("verificationCode").apply();
+                    getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().remove("email").apply();
                     // Redirect to the login page
                     startActivity(new Intent(ResetPasswordActivity.this, MainActivity.class));
                 } else {

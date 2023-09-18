@@ -43,6 +43,14 @@
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
         <activity
+            android:name=".StudentCourseDetailsActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
+            android:name=".StudentEventActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
             android:name=".LecturerDashboardActivity"
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
