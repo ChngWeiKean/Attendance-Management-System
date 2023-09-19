@@ -44,11 +44,17 @@
             android:layout_marginEnd="16dp"
             android:background="@color/purple" />
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lecturer_dashboard_cards_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            tools:listitem="@layout/lecturer_dashboard_course_cards" >
+        </androidx.recyclerview.widget.RecyclerView>
 
-        </ScrollView>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
