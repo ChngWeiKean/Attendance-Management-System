@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -41,7 +40,6 @@ public class LecturerDashboardActivity extends AppCompatActivity {
     private DatabaseReference courseRef;
     private DatabaseReference courseDetailsRef;
     List<Course> courseList = new ArrayList<>();
-    TextView forgotPasswordText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,14 +158,6 @@ public class LecturerDashboardActivity extends AppCompatActivity {
             }
         });
 
-        /* Temporarily commented out: causing fatal error.
-        forgotPasswordText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LecturerDashboardActivity.this, ForgotPasswordActivity.class));
-            }
-        });
-         */
     }
 
     private void setupRecyclerView() {

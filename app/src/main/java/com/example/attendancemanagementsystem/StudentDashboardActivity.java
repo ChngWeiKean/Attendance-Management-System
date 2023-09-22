@@ -61,14 +61,8 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
                     startActivity(new Intent(StudentDashboardActivity.this, StudentDashboardActivity.class));
-                    /*
-                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentQRScannerActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentEventsActivity.class));
-                } else if (menuItem.getItemId() == R.id.menu_user_profile) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
-                     */
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentEventActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference

@@ -23,21 +23,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/font_family"
-                android:text="Create Event"
+                android:text="Edit Event"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/request_approval_button"
+                android:id="@+id/save_changes_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginRight="5dp"
-                android:onClick="requestApproval"
+                android:onClick="saveChanges"
                 android:backgroundTint="@color/light_green"
                 android:fontFamily="@font/font_family"
                 android:textColor="@color/black"
-                android:text="Request Approval" />
+                android:text="Save Changes" />
         </com.google.android.material.appbar.MaterialToolbar>
 
         <View
@@ -66,8 +66,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/image_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:visibility="gone"/>
+                    android:layout_height="200dp" />
 
                 <!-- Indicator (e.g., Dots) to show the current image position -->
                 <LinearLayout
@@ -76,8 +75,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:visibility="gone">
+                    android:layout_marginTop="8dp">
 
                 </LinearLayout>
 
