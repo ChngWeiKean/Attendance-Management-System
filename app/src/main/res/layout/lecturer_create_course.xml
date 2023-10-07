@@ -273,7 +273,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/student_sidebar"
+        app:menu="@menu/lecturer_sidebar"
         android:maxWidth="250dp"
         app:itemIconTint="@color/purple"
         app:itemIconSize="30dp"

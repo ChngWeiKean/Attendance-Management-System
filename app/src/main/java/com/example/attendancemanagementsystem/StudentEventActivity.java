@@ -64,6 +64,8 @@ public class StudentEventActivity extends AppCompatActivity {
                     startActivity(new Intent(StudentEventActivity.this, StudentDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
                     startActivity(new Intent(StudentEventActivity.this, StudentEventActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
+                    startActivity(new Intent(StudentEventActivity.this, StudentQRScannerActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference
@@ -141,7 +143,7 @@ public class StudentEventActivity extends AppCompatActivity {
                         // Check if all events have been processed
                         if (pendingEventList.size() + approvedEventList.size() + rejectedEventList.size() == snapshot.getChildrenCount()) {
                             // All events have been categorized, set up RecyclerView
-                            setupRecyclerView();
+                            setupRecyclerView(event.getUserID());
                         }
                     }
                 } else {
@@ -158,9 +160,9 @@ public class StudentEventActivity extends AppCompatActivity {
         });
     }
 
-    private void setupRecyclerView() {
+    private void setupRecyclerView(String eventCreatorID) {
         // Initialize and configure the RecyclerView.
-        if (!pendingEventList.isEmpty()) {
+        if (!pendingEventList.isEmpty() && userId.equals(eventCreatorID)) {
             RecyclerView pendingEventRecyclerView = findViewById(R.id.pending_event_cards_container);
             StudentEventRecyclerAdapter pendingEventAdapter = new StudentEventRecyclerAdapter(pendingEventList, userId);
             LinearLayoutManager pendingLayoutManager = new LinearLayoutManager(this);
@@ -186,7 +188,7 @@ public class StudentEventActivity extends AppCompatActivity {
             title.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
         }
-        if (!rejectedEventList.isEmpty()) {
+        if (!rejectedEventList.isEmpty() && userId.equals(eventCreatorID)) {
             RecyclerView rejectedEventRecyclerView = findViewById(R.id.rejected_event_cards_container);
             StudentEventRecyclerAdapter rejectedEventAdapter = new StudentEventRecyclerAdapter(rejectedEventList, userId);
             LinearLayoutManager rejectedLayoutManager = new LinearLayoutManager(this);

@@ -7,10 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -63,6 +63,8 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
                     startActivity(new Intent(StudentClassEnrolmentActivity.this, StudentDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
                     startActivity(new Intent(StudentClassEnrolmentActivity.this, StudentEventActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
+                    startActivity(new Intent(StudentClassEnrolmentActivity.this, StudentQRScannerActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference
@@ -83,97 +85,101 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
 
-        TableLayout currentEnrolment = findViewById(R.id.current_enrolment_table);
-        TableLayout availableEnrolment = findViewById(R.id.available_enrolment_table);
-
         if (userId.isEmpty()) {
             startActivity(new Intent(StudentClassEnrolmentActivity.this, MainActivity.class));
         } else {
-            // Firebase Realtime Database reference
-            studentEnrollmentsRef = FirebaseDatabase.getInstance().getReference("courses");
-            scheduleRef = FirebaseDatabase.getInstance().getReference("course_schedules");
-            userRef = FirebaseDatabase.getInstance().getReference("users");
-            studentEnrollmentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {
-                        List<String> students = courseSnapshot.child("students").getValue(new GenericTypeIndicator<List<String>>() {});
-
-                        String courseCode = courseSnapshot.child("courseCode").getValue(String.class);
-                        String courseName = courseSnapshot.child("courseName").getValue(String.class);
-
-                        TableRow row = createTableRow(courseCode, courseName, students, userId, currentEnrolment, availableEnrolment);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("RegisterActivity", "Database Error: " + databaseError.getMessage());
-                }
-            });
+            fetchCurrentAndAvailableCourses(userId);
         }
     }
 
-    private TableRow createTableRow(String courseCode, String courseName, List<String> students, String userId, TableLayout currentEnrolment, TableLayout availableEnrolment) {
-        TableRow row = new TableRow(StudentClassEnrolmentActivity.this);
+    private void fetchCurrentAndAvailableCourses(String userId) {
+        // Firebase Realtime Database reference
+        studentEnrollmentsRef = FirebaseDatabase.getInstance().getReference("courses");
+        scheduleRef = FirebaseDatabase.getInstance().getReference("course_schedules");
+        userRef = FirebaseDatabase.getInstance().getReference("users");
 
-        TextView codeTextView = createTextView(courseCode, 0.5f);
-        TextView nameTextView = createTextView(courseName, 1.5f);
+        RecyclerView currentEnrolmentRecyclerView = findViewById(R.id.current_enrolment_table_recycler_view);
+        // Create a new LinearLayoutManager
+        LinearLayoutManager currentEnrolmentLayoutManager = new LinearLayoutManager(this);
+        currentEnrolmentRecyclerView.setLayoutManager(currentEnrolmentLayoutManager);
 
-        Button actionButton;
-        if (students != null && students.contains(userId)) {
-            actionButton = createButton("Remove");
-        } else {
-            actionButton = createButton("Enrol");
-        }
+        RecyclerView availableEnrolmentRecyclerView = findViewById(R.id.available_enrolment_table_recycler_view);
+        // Create a new LinearLayoutManager
+        LinearLayoutManager availableEnrolmentLayoutManager = new LinearLayoutManager(this);
+        availableEnrolmentRecyclerView.setLayoutManager(availableEnrolmentLayoutManager);
 
-        actionButton.setOnClickListener(new View.OnClickListener() {
+        List<Course> currentEnrolmentCourses = new ArrayList<>();
+        List<Course> availableEnrolmentCourses = new ArrayList<>();
+
+        studentEnrollmentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                if (actionButton.getText().equals("Remove")) {
-                    // Remove the student from the course's students list
-                    removeFromCourse(courseCode, userId);
-                    // Update the UI
-                    currentEnrolment.removeView(row);
-                    availableEnrolment.addView(row);
-                    actionButton.setText("Enrol");
-                } else {
-                    // Validate the class schedules before enrollment
-                    validateClassSchedules(courseCode, userId, new ScheduleValidationCallback() {
-                        @Override
-                        public void onValidationComplete(boolean hasConflict) {
-                            Log.d(TAG, hasConflict ? "Schedule conflict detected." : "No schedule conflict detected.");
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {
+                    Course course = courseSnapshot.getValue(Course.class);
+                    List<String> students = courseSnapshot.child("students").getValue(new GenericTypeIndicator<List<String>>() {});
 
-                            if (!hasConflict) {
-                                // Add the student to the course's students list
-                                addToCourse(courseCode, userId);
-                                // Update the UI
-                                availableEnrolment.removeView(row);
-                                currentEnrolment.addView(row);
-                                actionButton.setText("Remove");
-                                Log.d(TAG, "Enrollment successful.");
-                            } else {
-                                // Handle the case when there are conflicts
-                                // Display a message or take appropriate action
-                                Toast.makeText(StudentClassEnrolmentActivity.this, "Enrollment not allowed due to schedule conflicts.", Toast.LENGTH_SHORT).show();
+                    String courseCode = courseSnapshot.child("courseCode").getValue(String.class);
+                    String courseName = courseSnapshot.child("courseName").getValue(String.class);
+
+                    course.setCourseCode(courseCode);
+                    course.setCourseName(courseName);
+
+                    if (students != null && students.contains(userId)) {
+                        currentEnrolmentCourses.add(course);
+                    } else {
+                        availableEnrolmentCourses.add(course);
+                    }
+
+                    if (currentEnrolmentCourses.size() + availableEnrolmentCourses.size() == dataSnapshot.getChildrenCount()) {
+                        CurrentCourseEnrolmentRecyclerAdapter currentEnrolmentAdapter = new CurrentCourseEnrolmentRecyclerAdapter(currentEnrolmentCourses);
+                        AvailableCourseEnrolmentRecyclerAdapter availableEnrolmentAdapter = new AvailableCourseEnrolmentRecyclerAdapter(availableEnrolmentCourses);
+                        availableEnrolmentRecyclerView.setAdapter(availableEnrolmentAdapter);
+                        currentEnrolmentRecyclerView.setAdapter(currentEnrolmentAdapter);
+                        currentEnrolmentAdapter.setOnRemoveButtonClickListener(new CurrentCourseEnrolmentRecyclerAdapter.OnRemoveButtonClickListener() {
+                            @Override
+                            public void onRemoveButtonClicked(int position) {
+                                Course course = currentEnrolmentCourses.get(position);
+                                removeFromCourse(course.getCourseCode(), userId);
+                                currentEnrolmentCourses.remove(position);
+                                currentEnrolmentAdapter.notifyItemRemoved(position);
+                                availableEnrolmentCourses.add(course);
+                                availableEnrolmentAdapter.notifyItemInserted(availableEnrolmentCourses.size() - 1);
                             }
-                        }
-                    });
+                        });
+                        availableEnrolmentAdapter.setOnEnrolButtonClickListener(new AvailableCourseEnrolmentRecyclerAdapter.OnEnrolButtonClickListener() {
+                            @Override
+                            public void onEnrolButtonClicked(int position) {
+                                Course course = availableEnrolmentCourses.get(position);
+                                validateClassSchedules(course.getCourseCode(), userId, new ScheduleValidationCallback() {
+                                    @Override
+                                    public void onValidationComplete(boolean hasConflict) {
+                                        Log.d(TAG, hasConflict ? "Schedule conflict detected." : "No schedule conflict detected.");
+
+                                        if (!hasConflict) {
+                                            addToCourse(course.getCourseCode(), userId);
+                                            availableEnrolmentCourses.remove(position);
+                                            availableEnrolmentAdapter.notifyItemRemoved(position);
+                                            currentEnrolmentCourses.add(course);
+                                            currentEnrolmentAdapter.notifyItemInserted(currentEnrolmentCourses.size() - 1);
+                                            Log.d(TAG, "Enrollment successful.");
+                                        } else {
+                                            // Handle the case when there are conflicts
+                                            // Display a message or take appropriate action
+                                            Toast.makeText(StudentClassEnrolmentActivity.this, "Enrollment not allowed due to schedule conflicts.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
                 }
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("RegisterActivity", "Database Error: " + databaseError.getMessage());
+            }
         });
-
-        row.addView(codeTextView);
-        row.addView(nameTextView);
-        row.addView(actionButton);
-
-        if (students != null && students.contains(userId)) {
-            currentEnrolment.addView(row);
-        } else {
-            availableEnrolment.addView(row);
-        }
-
-        return row;
     }
 
     private void validateClassSchedules(String courseCode, String studentId, ScheduleValidationCallback callback) {

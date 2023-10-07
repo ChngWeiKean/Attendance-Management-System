@@ -30,12 +30,16 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    // add packagingOptions block 'META-INF/NOTICE.md'
     packagingOptions {
-        exclude("META-INF/LICENSE.md")
-        exclude("META-INF/LICENSE-FIREBASE.txt")
-        exclude("META-INF/NOTICE.md")
+        resources {
+            excludes += setOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-FIREBASE.txt",
+                "META-INF/NOTICE.md"
+            )
+        }
     }
+    // add packagingOptions block 'META-INF/NOTICE.md'
 
 }
 
@@ -50,6 +54,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.google.zxing:core:3.4.0")
+    implementation("com.journeyapps:zxing-android-embedded:4.2.0")
 
     implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
     implementation("com.google.firebase:firebase-analytics")

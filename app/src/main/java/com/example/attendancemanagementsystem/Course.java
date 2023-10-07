@@ -1,6 +1,5 @@
 package com.example.attendancemanagementsystem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
@@ -10,6 +9,8 @@ public class Course {
     private List<Integer> courseSchedules;
     private String lecturer;
     private List<String> students;
+    private Boolean hasOngoingSession;
+    private List<String> courseSessions;
 
     public String getCourseCode() {
         return courseCode;
@@ -29,6 +30,14 @@ public class Course {
 
     public List<String> getStudents() {
         return students;
+    }
+
+    public Boolean getHasOngoingSession() {
+        return hasOngoingSession;
+    }
+
+    public List<String> getCourseSessions() {
+        return courseSessions;
     }
 
     public void setCourseCode(String courseCode) {
@@ -57,6 +66,18 @@ public class Course {
 
     public void setStudents(List<String> students) {
         this.students = students;
+    }
+
+    public void setHasOngoingSession(Boolean hasOngoingSession) {
+        this.hasOngoingSession = hasOngoingSession;
+    }
+
+    public void setCourseSessions(List<String> courseSessions) {
+        this.courseSessions = courseSessions;
+    }
+
+    public void addCourseSession(String courseSessionID) {
+        courseSessions.add(courseSessionID);
     }
 
     public void addStudent(String student) {

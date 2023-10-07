@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".StudentEventActivity">
+    tools:context=".LecturerEventActivity">
 
     <LinearLayout
         android:id="@+id/home_content"
@@ -20,6 +20,7 @@
             android:layout_height="?attr/actionBarSize">
 
             <TextView
+                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -29,15 +30,15 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/create_event_button"
+                android:id="@+id/approve_event_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginRight="5dp"
                 android:backgroundTint="@color/purple"
                 android:fontFamily="@font/font_family"
-                android:text="Create Event"
-                android:onClick="redirectToCreateEvent"/>
+                android:text="Approve Event"
+                android:onClick="redirectToApproveEvent"/>
         </com.google.android.material.appbar.MaterialToolbar>
 
         <View
@@ -58,10 +59,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/approved_title"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/font_family"
                     android:text="Approved events"
                     android:textColor="@color/green"
@@ -69,58 +71,14 @@
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/approved_event_cards_container"
+                    android:id="@+id/event_cards_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxHeight="800dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:orientation="vertical"
-                    tools:listitem="@layout/student_event_card">
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <TextView
-                    android:id="@+id/pending_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:fontFamily="@font/font_family"
-                    android:text="Pending For Approval"
-                    android:textColor="@color/purple"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/pending_event_cards_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxHeight="800dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="vertical"
-                    tools:listitem="@layout/student_event_card">
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <TextView
-                    android:id="@+id/rejected_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:fontFamily="@font/font_family"
-                    android:text="Rejected events"
-                    android:textColor="@color/light_red"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rejected_event_cards_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxHeight="800dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="vertical"
-                    tools:listitem="@layout/student_event_card">
+                    tools:listitem="@layout/lecturer_event_card">
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
@@ -145,7 +103,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/student_sidebar"
+        app:menu="@menu/lecturer_sidebar"
         android:maxWidth="250dp"
         app:itemIconTint="@color/purple"
         app:itemIconSize="30dp"

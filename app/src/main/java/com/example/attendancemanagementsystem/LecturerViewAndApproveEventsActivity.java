@@ -12,9 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -31,8 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class StudentViewEventActivity extends AppCompatActivity {
+public class LecturerViewAndApproveEventsActivity extends AppCompatActivity {
 
     TextView title;
     public DrawerLayout drawerLayout;
@@ -46,7 +49,7 @@ public class StudentViewEventActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.student_view_event_details);
+        setContentView(R.layout.lecturer_view_and_approve_event_details);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(findViewById(R.id.toolbar));
@@ -62,17 +65,15 @@ public class StudentViewEventActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
-                    startActivity(new Intent(StudentViewEventActivity.this, StudentDashboardActivity.class));
+                    startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
-                    startActivity(new Intent(StudentViewEventActivity.this, StudentEventActivity.class));
-                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
-                    startActivity(new Intent(StudentViewEventActivity.this, StudentQRScannerActivity.class));
+                    startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerEventActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference
                     getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().clear().apply();
                     // Redirect to login page
-                    startActivity(new Intent(StudentViewEventActivity.this, MainActivity.class));
+                    startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, MainActivity.class));
                 }
                 return true;
             }
@@ -122,24 +123,13 @@ public class StudentViewEventActivity extends AppCompatActivity {
                 event.setDescription(snapshot.child("description").getValue(String.class));
                 Log.d("StudentViewEventActivity", "Event retrieved: " + event.toString());
 
-                Button eventStatus = findViewById(R.id.event_details_status);
                 TextView titleEditText = findViewById(R.id.event_title);
                 TextView venueEditText = findViewById(R.id.venue);
                 TextView descriptionEditText = findViewById(R.id.event_description);
                 TextView dateTextView = findViewById(R.id.date);
                 TextView startTime = findViewById(R.id.start_time_spinner);
                 TextView endTime = findViewById(R.id.end_time_spinner);
-                eventStatus.setText(event.getApprovalStatus());
-                if (userId == event.getUserID()) {
-                    eventStatus.setVisibility(View.VISIBLE);
-                    if (event.getApprovalStatus().equals("Pending")) {
-                        eventStatus.setBackgroundColor(getResources().getColor(R.color.purple));
-                    } else if (event.getApprovalStatus().equals("Approved")) {
-                        eventStatus.setBackgroundColor(getResources().getColor(R.color.light_green));
-                    } else if (event.getApprovalStatus().equals("Rejected")) {
-                        eventStatus.setBackgroundColor(getResources().getColor(R.color.light_red));
-                    }
-                }
+
                 titleEditText.setText(event.getTitle());
                 venueEditText.setText(event.getVenue());
                 descriptionEditText.setText(event.getDescription());
@@ -165,12 +155,21 @@ public class StudentViewEventActivity extends AppCompatActivity {
                     viewPager.setVisibility(View.VISIBLE);
                     dotsLayout.setVisibility(View.VISIBLE);
                 }
+
+                Log.d("Approval Status", event.getApprovalStatus());
+                if (Objects.equals(event.getApprovalStatus(), "Approved") || Objects.equals(event.getApprovalStatus(), "Rejected")) {
+                    Button approveBtn = findViewById(R.id.approve_event_button);
+                    Button rejectBtn = findViewById(R.id.reject_event_button);
+
+                    approveBtn.setVisibility(View.GONE);
+                    rejectBtn.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Log database error
-                Log.e("StudentViewEventActivity", "Database fetch cancelled: " + error.getMessage());
+                Log.e("Lecturer view event activity", "Database fetch cancelled: " + error.getMessage());
             }
         });
     }
@@ -224,5 +223,65 @@ public class StudentViewEventActivity extends AppCompatActivity {
 
             dots.get(i).setImageDrawable(drawable);
         }
+    }
+
+    public void approveEvent(View view) {
+        // Create a confirmation dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Approval of Event");
+        builder.setMessage("Are you sure you want to approve this event?");
+
+        // Add a positive button (Yes) and its action
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            String eventId = getIntent().getStringExtra("eventID");
+            // Retrieve event from database
+            DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference("events").child(eventId);
+
+            // Update the event's approval status to "Approved"
+            eventRef.child("approvalStatus").setValue("Approved");
+            Toast.makeText(this, "Event has been approved successfully.", Toast.LENGTH_SHORT).show();
+            // Redirect to lecturer event page
+            startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerEventActivity.class));
+        });
+
+        // Add a negative button (No) and its action
+        builder.setNegativeButton("No", (dialog, which) -> {
+            // Dismiss the dialog (do nothing)
+            dialog.dismiss();
+        });
+
+        // Show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void rejectEvent(View view) {
+        // Create a confirmation dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Rejection of Event");
+        builder.setMessage("Are you sure you want to reject this event?");
+
+        // Add a positive button (Yes) and its action
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            String eventId = getIntent().getStringExtra("eventID");
+            // Retrieve event from database
+            DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference("events").child(eventId);
+
+            // Update the event's approval status to "Approved"
+            eventRef.child("approvalStatus").setValue("Rejected");
+            Toast.makeText(this, "Event has been approved successfully.", Toast.LENGTH_SHORT).show();
+            // Redirect to lecturer event page
+            startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerEventActivity.class));
+        });
+
+        // Add a negative button (No) and its action
+        builder.setNegativeButton("No", (dialog, which) -> {
+            // Dismiss the dialog (do nothing)
+            dialog.dismiss();
+        });
+
+        // Show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
