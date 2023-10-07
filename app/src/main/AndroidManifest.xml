@@ -66,6 +66,10 @@
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
         <activity
+            android:name=".StudentQRScannerActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
             android:name=".LecturerDashboardActivity"
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
@@ -73,6 +77,41 @@
             android:name=".LecturerCreateCourseActivity"
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
+        <activity
+            android:name=".LecturerEventActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
+            android:name=".LecturerEventsForApproval"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
+            android:name=".LecturerViewAndApproveEventsActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
+            android:name=".LecturerCourseDetailsActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
+            android:name=".LecturerCreateSessionActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
+            android:name=".LecturerSessionDetailsActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+<!--        <activity-->
+<!--            android:name="com.journeyapps.barcodescanner.CaptureActivity"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:stateNotNeeded="true"-->
+<!--            android:theme="@style/Theme.AttendanceManagementSystem"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.zxing.client.android.SCAN" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
     </application>
 
 </manifest>

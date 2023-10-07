@@ -63,11 +63,9 @@ public class LecturerCreateCourseActivity extends AppCompatActivity {
 
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
                     startActivity(new Intent(LecturerCreateCourseActivity.this, LecturerDashboardActivity.class));
-                    /*
-                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentQRScannerActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentEventsActivity.class));
+                    startActivity(new Intent(LecturerCreateCourseActivity.this, LecturerEventActivity.class));
+                    /*
                 } else if (menuItem.getItemId() == R.id.menu_user_profile) {
                     startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
                      */
@@ -248,6 +246,7 @@ public class LecturerCreateCourseActivity extends AppCompatActivity {
         newCourse.setCourseSchedules(newScheduleIds);
         newCourse.setLecturer(getSharedPreferences("MyPrefs", MODE_PRIVATE).getString("userId", null));
         newCourse.setStudents(new ArrayList<>());
+        newCourse.setHasOngoingSession(false);
 
         // Save course object into courses node in firebase database
         coursesRef.child(courseCode).setValue(newCourse);

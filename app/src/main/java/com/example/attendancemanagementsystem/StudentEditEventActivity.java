@@ -72,6 +72,8 @@ public class StudentEditEventActivity extends AppCompatActivity {
                     startActivity(new Intent(StudentEditEventActivity.this, StudentDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
                     startActivity(new Intent(StudentEditEventActivity.this, StudentEventActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
+                    startActivity(new Intent(StudentEditEventActivity.this, StudentQRScannerActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference

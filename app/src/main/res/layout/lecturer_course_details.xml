@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nav"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LecturerCourseDetailsActivity">
+
+    <LinearLayout
+        android:id="@+id/home_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:fontFamily="@font/font_family"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/create_session_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/green"
+                android:fontFamily="@font/font_family"
+                android:text="Create Session"
+                android:onClick="createNewCourseSession"/>
+        </com.google.android.material.appbar.MaterialToolbar>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/toolbar"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/purple" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/statistics_chart_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_margin="20dp"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <!-- Text View -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginHorizontal="20dp"
+                                android:layout_marginTop="20dp"
+                                android:text="Attendance Percentage for Latest Sessions"
+                                android:textStyle="bold"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/font_family"
+                                android:textColor="@color/purple" />
+
+                            <!-- BarChartView -->
+                            <com.example.attendancemanagementsystem.BarChartView
+                                android:id="@+id/sessions_statistics_bar_chart"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginBottom="20dp"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="20dp"
+                            android:weightSum="2">
+                            <LinearLayout
+                                android:id="@+id/course_info_first_half"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1" >
+                                <LinearLayout
+                                    android:id="@+id/course_name_container"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/course_name_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Course Name"
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/font_family"
+                                        android:textColor="@color/purple"/>
+                                    <TextView
+                                        android:id="@+id/course_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:singleLine="true"
+                                        android:fontFamily="@font/font_family"
+                                        android:text="Course Name" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/lecturer_name_container"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:orientation="vertical" >
+                                    <TextView
+                                        android:id="@+id/lecturer_name_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Lecturer Name"
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/font_family"
+                                        android:textColor="@color/purple"/>
+                                    <TextView
+                                        android:id="@+id/lecturer_name"
+                                        android:layout_width="wrap_content"
+                                        android:singleLine="true"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/font_family"
+                                        android:text="Lecturer Name" />
+                                </LinearLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/course_info_second_half"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1" >
+                                <LinearLayout
+                                    android:id="@+id/course_code_container"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/course_code_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Course Code"
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/font_family"
+                                        android:textColor="@color/purple"/>
+                                    <TextView
+                                        android:id="@+id/course_code"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/font_family"
+                                        android:singleLine="true"
+                                        android:text="Course Code" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/lecturer_email_container"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:orientation="vertical" >
+                                    <TextView
+                                        android:id="@+id/lecturer_email_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Lecturer Email"
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/font_family"
+                                        android:textColor="@color/purple"/>
+                                    <TextView
+                                        android:id="@+id/lecturer_email"
+                                        android:singleLine="true"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/font_family"
+                                        android:text="Lecturer Email" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/sessions_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="Previous Sessions"
+                            android:fontFamily="@font/font_family"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="end" />
+
+                        <Button
+                            android:id="@+id/export_sessions_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:fontFamily="@font/font_family"
+                            android:backgroundTint="@color/purple"
+                            android:text="Export to CSV"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content" >
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/sessions_table">
+
+                            <TableRow
+                                android:id="@+id/sessions_table_header"
+                                android:weightSum="5">
+                                <TextView
+                                    android:layout_width="60dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Date"
+                                    android:fontFamily="@font/font_family"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center"
+                                    android:layout_weight="1"
+                                    android:padding="8dp"
+                                    android:background="#79c5f7" /> <!-- Header cell style -->
+
+                                <TextView
+                                    android:layout_width="60dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Start"
+                                    android:fontFamily="@font/font_family"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:background="#79c5f7" /> <!-- Header cell style -->
+
+                                <TextView
+                                    android:layout_width="60dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="End"
+                                    android:fontFamily="@font/font_family"
+                                    android:textSize="14sp"
+                                    android:gravity="center"
+                                    android:textStyle="bold"
+                                    android:layout_weight="1"
+                                    android:padding="8dp"
+                                    android:background="#79c5f7" /> <!-- Header cell style -->
+
+                                <TextView
+                                    android:layout_width="60dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Status"
+                                    android:fontFamily="@font/font_family"
+                                    android:textSize="14sp"
+                                    android:gravity="center"
+                                    android:textStyle="bold"
+                                    android:layout_weight="1"
+                                    android:padding="8dp"
+                                    android:background="#79c5f7" /> <!-- Header cell style -->
+
+                                <TextView
+                                    android:layout_width="60dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Action"
+                                    android:fontFamily="@font/font_family"
+                                    android:textSize="14sp"
+                                    android:gravity="center"
+                                    android:textStyle="bold"
+                                    android:layout_weight="1"
+                                    android:padding="8dp"
+                                    android:background="#79c5f7" /> <!-- Header cell style -->
+                            </TableRow>
+
+                            <View
+                                android:id="@+id/current_enrolment_table_header_line"
+                                android:layout_width="wrap_content"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_below="@id/current_enrolment_table"
+                                android:background="@color/purple" />
+
+                            <TextView
+                                android:id="@+id/no_previous_session_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="There were no previous sessions."
+                                android:textSize="18sp"
+                                android:padding="10dp"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:visibility="gone"
+                                android:fontFamily="@font/font_family"
+                                android:textColor="@color/purple" />
+                        </TableLayout>
+
+                        <!-- Recycler View for previous sessions list -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/sessions_table_rows_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:maxHeight="300dp"
+                            android:scrollbars="vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/student_attendance_summary_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="Attendance Summary"
+                            android:fontFamily="@font/font_family"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="end" />
+
+                        <Button
+                            android:id="@+id/export_attendance_summary_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:fontFamily="@font/font_family"
+                            android:backgroundTint="@color/purple"
+                            android:text="Export to CSV"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                            <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/student_attendance_summary_table">
+
+                                <TableRow
+                                    android:id="@+id/student_attendance_summary_table_header"
+                                    android:weightSum="3">
+                                    <TextView
+                                        android:layout_width="100dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="Name"
+                                        android:fontFamily="@font/font_family"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:padding="8dp"
+                                        android:background="#79c5f7" /> <!-- Header cell style -->
+
+                                    <TextView
+                                        android:layout_width="100dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="ID"
+                                        android:fontFamily="@font/font_family"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:padding="8dp"
+                                        android:background="#79c5f7" /> <!-- Header cell style -->
+
+                                    <TextView
+                                        android:layout_width="100dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="Attendance"
+                                        android:fontFamily="@font/font_family"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:padding="8dp"
+                                        android:background="#79c5f7" /> <!-- Header cell style -->
+
+                                </TableRow>
+
+                                <View
+                                    android:id="@+id/student_attendance_summary_table_line"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="1dp"
+                                    android:layout_below="@id/current_enrolment_table"
+                                    android:layout_marginBottom="5dp"
+                                    android:background="@color/purple" />
+
+                                <TextView
+                                    android:id="@+id/no_previous_student_attendance_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="There were no previous student attendance data."
+                                    android:textSize="18sp"
+                                    android:padding="10dp"
+                                    android:gravity="center"
+                                    android:textStyle="bold"
+                                    android:visibility="gone"
+                                    android:fontFamily="@font/font_family"
+                                    android:textColor="@color/purple" />
+
+                            </TableLayout>
+                    </LinearLayout>
+
+                    <!-- Recycler View for student attendance summary list -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/attendance_summary_table_rows_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:maxHeight="300dp"
+                        android:scrollbars="vertical" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/lecturer_sidebar"
+        android:maxWidth="250dp"
+        app:itemIconTint="@color/purple"
+        app:itemIconSize="30dp"
+        app:itemIconPadding="30dp"
+        app:itemVerticalPadding="15dp"
+        app:headerLayout="@layout/checkmate_logo_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
