@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nav"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LecturerEditCourseActivity">
+
+    <LinearLayout
+        android:id="@+id/home_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Course"
+                android:fontFamily="@font/font_family"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/toolbar"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/purple" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_scroll_parent_layout"
+                android:layout_marginBottom="65dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/edit_linear_parent_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/edit_course_code_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Course Code"
+                            android:layout_margin="16dp"
+                            android:fontFamily="@font/font_family"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edit_course_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:background="@drawable/card_shape"
+                            android:hint="Course Code"
+                            android:padding="8dp"
+                            android:textColor="@color/black"
+                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:fontFamily="@font/font_family"/>
+
+                        <TextView
+                            android:id="@+id/edit_course_name_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Course Name"
+                            android:layout_margin="16dp"
+                            android:fontFamily="@font/font_family"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edit_course_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:background="@drawable/card_shape"
+                            android:hint="Course Name"
+                            android:padding="8dp"
+                            android:textColor="@color/black"
+                            android:textColorHighlight="@color/cardview_dark_background"
+                            android:fontFamily="@font/font_family"/>
+
+                        <LinearLayout
+                            android:id="@+id/edit_course_schedule_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/edit_schedule_buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="right">
+
+                        <Button
+                            android:id="@+id/edit_add_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:backgroundTint="@color/light_green"
+                            android:fontFamily="@font/font_family"
+                            android:onClick="editAddScheduleRow"
+                            android:text="Add"
+                            android:textColor="@color/black" />
+
+                        <Button
+                            android:id="@+id/edit_delete_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:text="Delete"
+                            android:backgroundTint="@color/light_red"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/font_family"
+                            android:onClick="editDeleteScheduleRow"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/edit_cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="12dp"
+                    android:layout_alignParentBottom="true"
+                    android:backgroundTint="@color/light_red"
+                    android:fontFamily="@font/font_family"
+                    android:onClick="cancelEditCourse"
+                    android:text="Cancel"
+                    android:textSize="18sp"
+                    app:cornerRadius="20dp">
+                </Button>
+                <Button
+                    android:id="@+id/edit_save_button"
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentBottom="true"
+                    android:text="Save"
+                    android:backgroundTint="@color/light_green"
+                    android:textSize="18sp"
+                    app:cornerRadius="20dp"
+                    android:fontFamily="@font/font_family"
+                    android:layout_toRightOf="@id/edit_cancel_button"
+                    android:onClick="validateEditCourse" >
+                </Button>
+            </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/student_sidebar"
+        android:maxWidth="250dp"
+        app:itemIconTint="@color/purple"
+        app:itemIconSize="30dp"
+        app:itemIconPadding="30dp"
+        app:itemVerticalPadding="15dp"
+        app:headerLayout="@layout/checkmate_logo_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

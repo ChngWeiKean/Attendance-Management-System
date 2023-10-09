@@ -32,7 +32,7 @@ public class LecturerDashboardActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     Button createCourseButton;
-    private String userId;
+
     private SharedPreferences sharedPreferences;
     private DatabaseReference databaseReference;
     private DatabaseReference userRef;
@@ -61,9 +61,9 @@ public class LecturerDashboardActivity extends AppCompatActivity {
 
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
                     startActivity(new Intent(LecturerDashboardActivity.this, LecturerDashboardActivity.class));
-                } else if (menuItem.getItemId() == R.id.menu_events) {
-                    startActivity(new Intent(LecturerDashboardActivity.this, LecturerEventActivity.class));
                     /*
+                } else if (menuItem.getItemId() == R.id.menu_events) {
+                    startActivity(new Intent(StudentDashboardActivity.this, StudentEventsActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_user_profile) {
                     startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
                      */
@@ -86,7 +86,7 @@ public class LecturerDashboardActivity extends AppCompatActivity {
 
         // Get the user's ID from shared preferences, which was obtained during login.
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        userId = sharedPreferences.getString("userId", "");
+        String userId = sharedPreferences.getString("userId", "");
 
         // Get references to the user's course enrollments in the database.
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -172,6 +172,7 @@ public class LecturerDashboardActivity extends AppCompatActivity {
         // Set the adapter for the RecyclerView.
         recyclerView.setAdapter(adapter);
 
+        /* Temporarily commented out: not yet implemented.
         adapter.setOnItemClickListener(position -> {
             // Handle item click here
             Course course = courseList.get(position);
@@ -180,6 +181,34 @@ public class LecturerDashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(LecturerDashboardActivity.this, LecturerCourseDetailsActivity.class);
             intent.putExtra("course", course.getCourseCode());
             startActivity(intent);
+        });
+         */
+
+        adapter.setOnItemClickListener(new LecturerDashboardRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                /*
+                Course course = courseList.get(position);
+                Intent intent = new Intent(LecturerDashboardActivity.this, LecturerCourseDetailsActivity.class);
+                intent.putExtra("courseId", course.getCourseCode());
+                intent.putExtra("courseName", course.getCourseName());
+                startActivity(intent);
+                 */
+            }
+
+            @Override
+            public void onEditClick(int position) {
+                Course course = courseList.get(position);
+                Intent intent = new Intent(LecturerDashboardActivity.this, LecturerEditCourseActivity.class);
+                intent.putExtra("courseId", course.getCourseCode());
+                intent.putExtra("courseName", course.getCourseName());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+
+            }
         });
     }
 
