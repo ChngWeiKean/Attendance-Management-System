@@ -2,6 +2,7 @@ package com.example.attendancemanagementsystem;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
@@ -139,38 +141,70 @@ public class StudentClassEnrolmentActivity extends AppCompatActivity {
                             @Override
                             public void onRemoveButtonClicked(int position) {
                                 Course course = currentEnrolmentCourses.get(position);
-                                removeFromCourse(course.getCourseCode(), userId);
-                                currentEnrolmentCourses.remove(position);
-                                currentEnrolmentAdapter.notifyItemRemoved(position);
-                                availableEnrolmentCourses.add(course);
-                                availableEnrolmentAdapter.notifyItemInserted(availableEnrolmentCourses.size() - 1);
+
+                                // Build a confirmation dialog
+                                AlertDialog.Builder builder = new AlertDialog.Builder(StudentClassEnrolmentActivity.this);
+                                builder.setTitle("Remove Course");
+                                builder.setMessage("Are you sure you want to remove this course?");
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // User confirmed, proceed with removal
+                                        removeFromCourse(course.getCourseCode(), userId);
+                                        currentEnrolmentCourses.remove(position);
+                                        currentEnrolmentAdapter.notifyItemRemoved(position);
+                                        availableEnrolmentCourses.add(course);
+                                        availableEnrolmentAdapter.notifyItemInserted(availableEnrolmentCourses.size() - 1);
+                                    }
+                                });
+                                builder.setNegativeButton("No", null);
+
+                                // Show the confirmation dialog
+                                builder.show();
                             }
                         });
+
                         availableEnrolmentAdapter.setOnEnrolButtonClickListener(new AvailableCourseEnrolmentRecyclerAdapter.OnEnrolButtonClickListener() {
                             @Override
                             public void onEnrolButtonClicked(int position) {
                                 Course course = availableEnrolmentCourses.get(position);
-                                validateClassSchedules(course.getCourseCode(), userId, new ScheduleValidationCallback() {
-                                    @Override
-                                    public void onValidationComplete(boolean hasConflict) {
-                                        Log.d(TAG, hasConflict ? "Schedule conflict detected." : "No schedule conflict detected.");
 
-                                        if (!hasConflict) {
-                                            addToCourse(course.getCourseCode(), userId);
-                                            availableEnrolmentCourses.remove(position);
-                                            availableEnrolmentAdapter.notifyItemRemoved(position);
-                                            currentEnrolmentCourses.add(course);
-                                            currentEnrolmentAdapter.notifyItemInserted(currentEnrolmentCourses.size() - 1);
-                                            Log.d(TAG, "Enrollment successful.");
-                                        } else {
-                                            // Handle the case when there are conflicts
-                                            // Display a message or take appropriate action
-                                            Toast.makeText(StudentClassEnrolmentActivity.this, "Enrollment not allowed due to schedule conflicts.", Toast.LENGTH_SHORT).show();
-                                        }
+                                // Build a confirmation dialog
+                                AlertDialog.Builder builder = new AlertDialog.Builder(StudentClassEnrolmentActivity.this);
+                                builder.setTitle("Enrol in Course");
+                                builder.setMessage("Are you sure you want to enrol in this course?");
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // User confirmed, proceed with enrolment
+                                        validateClassSchedules(course.getCourseCode(), userId, new ScheduleValidationCallback() {
+                                            @Override
+                                            public void onValidationComplete(boolean hasConflict) {
+                                                Log.d(TAG, hasConflict ? "Schedule conflict detected." : "No schedule conflict detected.");
+
+                                                if (!hasConflict) {
+                                                    addToCourse(course.getCourseCode(), userId);
+                                                    availableEnrolmentCourses.remove(position);
+                                                    availableEnrolmentAdapter.notifyItemRemoved(position);
+                                                    currentEnrolmentCourses.add(course);
+                                                    currentEnrolmentAdapter.notifyItemInserted(currentEnrolmentCourses.size() - 1);
+                                                    Log.d(TAG, "Enrollment successful.");
+                                                } else {
+                                                    // Handle the case when there are conflicts
+                                                    // Display a message or take appropriate action
+                                                    Toast.makeText(StudentClassEnrolmentActivity.this, "Enrollment not allowed due to schedule conflicts.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                                     }
                                 });
+                                builder.setNegativeButton("No", null);
+
+                                // Show the confirmation dialog
+                                builder.show();
                             }
                         });
+
                     }
                 }
             }

@@ -286,6 +286,22 @@ public class StudentCourseDetailsActivity extends AppCompatActivity {
                         PieChartView pieChartView = findViewById(R.id.student_attendance_pie_chart);
                         pieChartView.setData(studentAttendancePieChartData);
 
+                        TextView attendanceScoreTitle = findViewById(R.id.attendance_score_title);
+
+                        if (percentagePresent >= recommendedPercentage) {
+                            attendanceScoreTitle.setText("Good Attendance Score!");
+                            attendanceScoreTitle.setTextColor(getResources().getColor(R.color.light_green));
+                        } else if (percentagePresent >= classAverage && percentagePresent < recommendedPercentage) {
+                            attendanceScoreTitle.setText("Attendance Score Above Average!");
+                            attendanceScoreTitle.setTextColor(getResources().getColor(R.color.orange));
+                        } else if (percentagePresent < classAverage) {
+                            attendanceScoreTitle.setText("Attendance Score Below Average!");
+                            attendanceScoreTitle.setTextColor(getResources().getColor(R.color.light_red));
+                        } else if (percentagePresent == 0) {
+                            attendanceScoreTitle.setText("No Attendance Score!");
+                            attendanceScoreTitle.setTextColor(getResources().getColor(R.color.light_red));
+                        }
+
                         HorizontalBarChartView horizontalBarChartView = findViewById(R.id.horizontal_bar_chart);
                         horizontalBarChartView.setData(recommendedPercentage, percentagePresent + percentageLate, classAverage);
 

@@ -96,17 +96,24 @@ public class HorizontalBarChartView extends View {
         float xAxisLabelY = height - gap / 2 + 20; // Y position for x-axis label
         canvas.drawText(xAxisLabel, xAxisLabelX, xAxisLabelY, paint);
 
-        // Draw the recommended bar
-        paint.setColor(getResources().getColor(R.color.blue));
-        canvas.drawRect(gap + 40, gap - 20, (width * recommendedPercentage / 100) - gap, gap + barHeight - 20, paint);
+        if (recommendedPercentage > 0) {
+            // Draw the recommended bar
+            paint.setColor(getResources().getColor(R.color.blue));
+            canvas.drawRect(gap + 40, gap - 20, (width * recommendedPercentage / 100) - gap, gap + barHeight - 20, paint);
 
-        // Draw the present bar
-        paint.setColor(getResources().getColor(R.color.light_green));
-        canvas.drawRect(gap + 40, gap + barHeight + gap - 20, (width * percentagePresent / 100) - gap, gap + 2 * barHeight + gap - 20, paint);
+        }
 
-        // Draw the class average bar
-        paint.setColor(getResources().getColor(R.color.orange));
-        canvas.drawRect(gap + 40, gap + 2 * (barHeight + gap) - 20, (width * classAverage / 100) - gap, gap + 3 * barHeight + 2 * gap - 20, paint);
+        if (percentagePresent > 0) {
+            // Draw the present bar
+            paint.setColor(getResources().getColor(R.color.light_green));
+            canvas.drawRect(gap + 40, gap + barHeight + gap - 20, (width * percentagePresent / 100) - gap, gap + 2 * barHeight + gap - 20, paint);
+        }
+
+        if (classAverage > 0) {
+            // Draw the class average bar
+            paint.setColor(getResources().getColor(R.color.orange));
+            canvas.drawRect(gap + 40, gap + 2 * (barHeight + gap) - 20, (width * classAverage / 100) - gap, gap + 3 * barHeight + 2 * gap - 20, paint);
+        }
 
         // Draw percentages inside the bars
         paint.setColor(Color.BLACK); // Set text color to black

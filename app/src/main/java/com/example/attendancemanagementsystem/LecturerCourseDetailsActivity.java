@@ -1,5 +1,7 @@
 package com.example.attendancemanagementsystem;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -25,6 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -208,6 +214,8 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
         final int[] totalLate = {0};
         final int[] totalAbsent = {0};
 
+        String courseCode = getIntent().getStringExtra("course");
+
         // For each session ID, inflate a new row and add it to the table
         for (String sessionID : sessionIDs) {
             DatabaseReference sessionRef = FirebaseDatabase.getInstance().getReference("course_sessions").child(String.valueOf(sessionID));
@@ -286,8 +294,11 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
                     // Add the sessionData list to sessionList
                     sessionList.add(sessionData);
 
-                    // Check if all sessions have been processed
+                    // Find the "Export to CSV" button
+                    Button exportSessionsToCSVButton = findViewById(R.id.export_sessions_button);
+
                     if (sessionList.size() == sessionIDs.size()) {
+                        // Session data is available, set up the adapter and enable the button
                         PreviousSessionDetailsRecyclerAdapter adapter = new PreviousSessionDetailsRecyclerAdapter(LecturerCourseDetailsActivity.this, sessionList, new PreviousSessionDetailsRecyclerAdapter.OnSessionDetailsButtonClickListener() {
                             @Override
                             public void onSessionDetailsButtonClicked(int position) {
@@ -296,6 +307,15 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
                         });
 
                         sessionRecyclerView.setAdapter(adapter);
+
+                        exportSessionsToCSVButton.setEnabled(true); // Enable the button
+                        exportSessionsToCSVButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d("Session List", "Export session to CSV");
+                                exportSessionsToCSV(sessionList, courseCode);
+                            }
+                        });
                     }
 
                     // Add percentage and date to attendanceData and sessionDates
@@ -382,11 +402,24 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
 
                     attendanceSummaryList.add(attendanceSummaryData);
 
-                    // Check if all sessions have been processed
+                    // Find the "Export to CSV" button
+                    Button exportAttendanceSummaryToCSVButton = findViewById(R.id.export_attendance_summary_button);
+
                     if (attendanceSummaryList.size() == studentIDs.size()) {
+                        // Data is available, set up the adapter and enable the button
                         StudentAttendanceSummaryRecyclerAdapter adapter = new StudentAttendanceSummaryRecyclerAdapter(LecturerCourseDetailsActivity.this, attendanceSummaryList);
                         attendanceSummaryRecyclerView.setAdapter(adapter);
+
+                        exportAttendanceSummaryToCSVButton.setEnabled(true); // Enable the button
+                        exportAttendanceSummaryToCSVButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d("Session List", "Export attendance summary to CSV");
+                                exportAttendanceSummaryToCSV(attendanceSummaryList, courseCode);
+                            }
+                        });
                     }
+
                 }
 
                 @Override
@@ -396,6 +429,7 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
                 }
             });
         }
+
     }
 
     public String convertDateFormat(String originalDateStr) {
@@ -605,5 +639,114 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
         intent.putExtra("course", courseCode);
         intent.putExtra("sessionID", sessionID);
         startActivity(intent);
+    }
+
+    public void exportSessionsToCSV(List<List<String>> sessionList, String courseCode) {
+        try {
+            // Get the app's data directory
+            File dir = new File(getFilesDir(), "MyApp");
+            Log.d(TAG, "Directory: " + dir.getAbsolutePath());
+
+            if (!dir.exists()) {
+                if (dir.mkdirs()) {
+                    Log.d(TAG, "Directory created successfully");
+                } else {
+                    Log.e(TAG, "Failed to create directory");
+                }
+            }
+
+            // Create a CSV file for sessions in the app's data directory
+            File file = new File(dir, courseCode + "_session_data.csv");
+            FileWriter writer = new FileWriter(file);
+
+            // Define column names (headers)
+            String[] headers = {"Date", "Start Time", "End Time", "Total Attendance Count"};
+
+            // Write the header row
+            for (String header : headers) {
+                writer.append(header);
+                writer.append(",");
+            }
+            writer.append("\n");
+
+            // Write the data rows
+            for (List<String> row : sessionList) {
+                // Exclude the "color" element (the fifth element)
+                for (int i = 0; i < 4; i++) {
+                    writer.append(row.get(i));
+                    writer.append(",");
+                }
+                writer.append("\n");
+            }
+
+            // Close the writer
+            writer.flush();
+            writer.close();
+
+            // Display a success message
+            Toast.makeText(this, "Session details exported successfully!", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "File path: " + file.getAbsolutePath());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle errors, such as file I/O issues
+            // Log error
+            Log.e("File Error", e.getMessage());
+        }
+    }
+
+    // Function to export attendance summary data to a CSV file
+    public void exportAttendanceSummaryToCSV(List<List<String>> attendanceSummaryList, String courseCode) {
+        try {
+            // Get the app's data directory
+            File dir = new File(getFilesDir(), "MyApp");
+            Log.d(TAG, "Directory: " + dir.getAbsolutePath());
+
+            if (!dir.exists()) {
+                if (dir.mkdirs()) {
+                    Log.d(TAG, "Directory created successfully");
+                } else {
+                    Log.e(TAG, "Failed to create directory");
+                }
+            }
+
+            // Create a CSV file for sessions
+            File file = new File(dir, courseCode + "_student_attendance_summary_data.csv");
+            FileWriter writer = new FileWriter(file);
+
+            // Define column names (headers)
+            String[] headers = {"Student Name", "Student ID", "Total Attendance Count"};
+
+            // Write the header row
+            for (String header : headers) {
+                writer.append(header);
+                writer.append(",");
+            }
+            writer.append("\n");
+
+            // Write the data rows
+            for (List<String> row : attendanceSummaryList) {
+                // Exclude the "color" element (the fifth element)
+                for (int i = 0; i < 3; i++) {
+                    writer.append(row.get(i));
+                    writer.append(",");
+                }
+                writer.append("\n");
+            }
+
+            // Close the writer
+            writer.flush();
+            writer.close();
+
+            // Display a success message
+            Toast.makeText(this, "Attendance summary exported successfully!", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "File path: " + file.getAbsolutePath());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle errors, such as permission denied or file I/O issues
+            // Log error
+            Log.e("File Error", e.getMessage());
+        }
     }
 }
