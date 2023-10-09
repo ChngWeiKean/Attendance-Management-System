@@ -78,6 +78,10 @@
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
         <activity
+            android:name=".LecturerEditCourseActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
             android:name=".LecturerEventActivity"
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
