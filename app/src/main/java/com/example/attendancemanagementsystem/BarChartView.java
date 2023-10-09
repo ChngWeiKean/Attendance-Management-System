@@ -3,8 +3,11 @@ package com.example.attendancemanagementsystem;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.List;
 
@@ -133,6 +136,8 @@ public class BarChartView extends View {
             canvas.save();
             canvas.rotate(textRotationDegrees, centerX, centerY);
 
+            Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.font_family);
+            barPaint.setTypeface(typeface);
             // Draw the rotated text (session date)
             canvas.drawText(sessionDate, centerX, centerY, barPaint);
 
@@ -141,6 +146,7 @@ public class BarChartView extends View {
 
             // Change color depending on attendanceData
             barPaint.setTextSize(50); // Text size for attendance values
+            barPaint.setTypeface(typeface);
 
             // Draw the attendance value, handle 0% differently
             if (attendancePercentage != 0 && attendancePercentage < 100) {

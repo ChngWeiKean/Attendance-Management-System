@@ -172,28 +172,14 @@ public class LecturerDashboardActivity extends AppCompatActivity {
         // Set the adapter for the RecyclerView.
         recyclerView.setAdapter(adapter);
 
-        /* Temporarily commented out: not yet implemented.
-        adapter.setOnItemClickListener(position -> {
-            // Handle item click here
-            Course course = courseList.get(position);
-            // Redirect to another page or perform any action you want
-            // For example, start a new activity with course details
-            Intent intent = new Intent(LecturerDashboardActivity.this, LecturerCourseDetailsActivity.class);
-            intent.putExtra("course", course.getCourseCode());
-            startActivity(intent);
-        });
-         */
-
         adapter.setOnItemClickListener(new LecturerDashboardRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                /*
                 Course course = courseList.get(position);
                 Intent intent = new Intent(LecturerDashboardActivity.this, LecturerCourseDetailsActivity.class);
-                intent.putExtra("courseId", course.getCourseCode());
+                intent.putExtra("course", course.getCourseCode());
                 intent.putExtra("courseName", course.getCourseName());
                 startActivity(intent);
-                 */
             }
 
             @Override
