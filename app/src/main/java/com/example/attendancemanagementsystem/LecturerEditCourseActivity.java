@@ -15,9 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import java.util.Set;
-import java.util.HashSet;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -72,11 +69,9 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
 
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
                     startActivity(new Intent(LecturerEditCourseActivity.this, LecturerDashboardActivity.class));
-                    /*
-                } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentQRScannerActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentEventsActivity.class));
+                    startActivity(new Intent(LecturerEditCourseActivity.this, LecturerEventActivity.class));
+                    /*
                 } else if (menuItem.getItemId() == R.id.menu_user_profile) {
                     startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
                      */
@@ -358,6 +353,9 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
         });
     }
 
+    // Declare a boolean flag to track if the Toast has been shown for editCourse
+    boolean toastShownForEditCourse = false;
+
     private void editCourse(String newCourseCode, String newCourseName, List<Integer> newScheduleIds) {
         // Get the original course code and course name
         String originalCourseCode = getIntent().getStringExtra("courseId");
@@ -380,10 +378,22 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
                     courseSnapshot.child("courseSchedules").getRef().setValue(newScheduleIds);
 
                     // Display a success message
-                    Toast.makeText(LecturerEditCourseActivity.this, "Course updated successfully!", Toast.LENGTH_LONG).show();
+                    if (!toastShownForEditCourse) {
+                        // Show the Toast message
+                        Toast.makeText(LecturerEditCourseActivity.this, "Course updated successfully!", Toast.LENGTH_LONG).show();
+
+                        // Set the flag to true to prevent further Toasts
+                        toastShownForEditCourse = true;
+                    }
                 } else {
                     // Display an error message
-                    Toast.makeText(LecturerEditCourseActivity.this, "Course not found!", Toast.LENGTH_LONG).show();
+                    if (!toastShownForEditCourse) {
+                        // Show the Toast message
+                        Toast.makeText(LecturerEditCourseActivity.this, "Course not found!", Toast.LENGTH_LONG).show();
+
+                        // Set the flag to true to prevent further Toasts
+                        toastShownForEditCourse = true;
+                    }
                 }
             }
 
@@ -397,6 +407,7 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
     public void validateEditCourse(View view) {
 
         timeConflictToastShown = false;
+        final boolean[] toastShown = {false};
 
         Log.d(TAG, "Validating edit course");
         EditText courseCode = findViewById(R.id.edit_course_code);
@@ -455,12 +466,16 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
                             // else create the new course
                             if (hasTimeConflict) {
                                 // Display an error message
-                                Toast.makeText(this, "There is a time conflict with your existing courses", Toast.LENGTH_LONG).show();
+                                if (!toastShown[0]) {
+                                    // Show the Toast message
+                                    Toast.makeText(this, "There is a time conflict with your existing courses", Toast.LENGTH_LONG).show();
+
+                                    // Set the flag to true to prevent further Toasts
+                                    toastShown[0] = true;
+                                }
                             } else {
                                 // No time conflicts, create the new course
                                 saveEditCourse(view);
-                                // Display a success message
-                                Toast.makeText(this, "Course edit successfully", Toast.LENGTH_LONG).show();
                             }
 
                         }); // End of fetchNewCourseSchedules
