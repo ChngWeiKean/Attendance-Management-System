@@ -42,6 +42,7 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     private SharedPreferences sharedPreferences;
+    List<List<String>> studentAttendancePieChartData = new ArrayList<>();
     List<Float> attendanceData = new ArrayList<>();
     List<String> sessionDates = new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,6 +204,9 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
         // Define sessionList as a 2D list of strings
         List<List<String>> sessionList = new ArrayList<>();
         List<List<String>> attendanceSummaryList = new ArrayList<>();
+        final int[] totalPresent = {0};
+        final int[] totalLate = {0};
+        final int[] totalAbsent = {0};
 
         // For each session ID, inflate a new row and add it to the table
         for (String sessionID : sessionIDs) {
@@ -237,6 +241,14 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
                             present++;
                         } else {
                             sessionAttendanceData.put(studentID, 0);
+                        }
+
+                        if (attendanceStatus.equals("Present")) {
+                            totalPresent[0]++;
+                        } else if (attendanceStatus.equals("Late")) {
+                            totalLate[0]++;
+                        } else if (attendanceStatus.equals("Absent")) {
+                            totalAbsent[0]++;
                         }
                     }
                     // Add the sessionAttendanceData map to the studentAttendanceData list
@@ -297,6 +309,30 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
                         // All database operations completed, now update the BarChartView
                         BarChartView barChartView = findViewById(R.id.sessions_statistics_bar_chart);
                         barChartView.setData(attendanceData, sessionDates);
+
+                        float percentagePresent = (float) totalPresent[0] / (totalPresent[0] + totalLate[0] + totalAbsent[0]) * 100;
+                        float percentageLate = (float) totalLate[0] / (totalPresent[0] + totalLate[0] + totalAbsent[0]) * 100;
+                        float percentageAbsent = (float) totalAbsent[0] / (totalPresent[0] + totalLate[0] + totalAbsent[0]) * 100;
+
+                        List<String> presentData = new ArrayList<>(), lateData = new ArrayList<>(), absentData = new ArrayList<>();
+
+                        presentData.add(String.valueOf(percentagePresent));
+                        presentData.add("light_green");
+
+                        lateData.add(String.valueOf(percentageLate));
+                        lateData.add("orange");
+
+                        absentData.add(String.valueOf(percentageAbsent));
+                        absentData.add("light_red");
+
+                        studentAttendancePieChartData.add(presentData);
+                        studentAttendancePieChartData.add(lateData);
+                        studentAttendancePieChartData.add(absentData);
+
+                        Log.d("Pie Chart Data", "Pie Chart Data: " + studentAttendancePieChartData.toString());
+
+                        PieChartView pieChartView = findViewById(R.id.student_attendance_pie_chart);
+                        pieChartView.setData(studentAttendancePieChartData);
                     }
                 }
 
