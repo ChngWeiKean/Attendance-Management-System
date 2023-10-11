@@ -59,6 +59,15 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"/>
 
+                <ProgressBar
+                    android:id="@+id/loadingProgressBarQRCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="visible" />
+
                 <TextView
                     android:id="@+id/current_sessions_title"
                     android:layout_width="wrap_content"
@@ -123,6 +132,15 @@
                         android:layout_below="@id/current_enrolment_table"
                         android:background="@color/purple" />
                 </TableLayout>
+
+                <ProgressBar
+                    android:id="@+id/loadingProgressBarTableRows"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:layout_marginTop="20dp"
+                    android:visibility="visible" />
             </LinearLayout>
         </ScrollView>
 

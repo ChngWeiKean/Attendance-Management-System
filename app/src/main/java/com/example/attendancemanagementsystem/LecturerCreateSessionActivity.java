@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -101,7 +102,12 @@ public class LecturerCreateSessionActivity extends AppCompatActivity {
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        ProgressBar qrCodeLoader = findViewById(R.id.loadingProgressBarQRCode);
+        ProgressBar tableRowLoader = findViewById(R.id.loadingProgressBarTableRows);
+
         Runnable onComplete = () -> {
+            qrCodeLoader.setVisibility(View.VISIBLE);
+
             // This code will run when the fetch operation is complete
             Log.d("Fetch Course", "Fetch completed!");
             String qrCodeString = String.valueOf(courseSession.getSessionID()) + '|' + courseSession.getCourseCode() + '|' + courseSession.getDate();
@@ -110,9 +116,12 @@ public class LecturerCreateSessionActivity extends AppCompatActivity {
             ImageView qrCodeImageView = findViewById(R.id.qr_code);
             qrCodeImageView.setImageBitmap(qrCodeBitmap);
 
+            qrCodeLoader.setVisibility(View.GONE);
+
             createStudentArray(courseSession, new StudentArrayCallback() {
                 @Override
                 public void onStudentArrayReceived(String[][] studentArray) {
+                    tableRowLoader.setVisibility(View.VISIBLE);
                     TableLayout studentAttendanceTable = findViewById(R.id.current_sessions_attendance_table);
 
                     for (String[] studentInfo : studentArray) {
@@ -139,6 +148,8 @@ public class LecturerCreateSessionActivity extends AppCompatActivity {
                         // Add the inflated TableRow to the TableLayout
                         studentAttendanceTable.addView(row);
                     }
+
+                    tableRowLoader.setVisibility(View.GONE);
                 }
             });
         };

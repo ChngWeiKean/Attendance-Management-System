@@ -61,12 +61,8 @@ public class LecturerDashboardActivity extends AppCompatActivity {
 
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
                     startActivity(new Intent(LecturerDashboardActivity.this, LecturerDashboardActivity.class));
-                    /*
                 } else if (menuItem.getItemId() == R.id.menu_events) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentEventsActivity.class));
-                } else if (menuItem.getItemId() == R.id.menu_user_profile) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
-                     */
+                    startActivity(new Intent(LecturerDashboardActivity.this, LecturerEventActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference
