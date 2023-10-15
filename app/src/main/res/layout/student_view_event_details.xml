@@ -30,7 +30,6 @@
 
             <Button
                 android:id="@+id/event_details_status"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -226,6 +225,28 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/card_shape"
+                    android:fontFamily="@font/font_family"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/rejection_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/font_family"
+                    android:text="Reason For Rejection"
+                    android:textStyle="bold"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/rejection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rejection_card_shape"
                     android:fontFamily="@font/font_family"
                     android:inputType="text"
                     android:padding="10dp"

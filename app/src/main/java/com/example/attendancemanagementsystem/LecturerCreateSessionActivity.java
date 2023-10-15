@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -123,6 +124,7 @@ public class LecturerCreateSessionActivity extends AppCompatActivity {
                 public void onStudentArrayReceived(String[][] studentArray) {
                     tableRowLoader.setVisibility(View.VISIBLE);
                     TableLayout studentAttendanceTable = findViewById(R.id.current_sessions_attendance_table);
+                    DatabaseReference sessionRef = FirebaseDatabase.getInstance().getReference("course_sessions").child(String.valueOf(courseSession.getSessionID()));
 
                     for (String[] studentInfo : studentArray) {
                         // Inflate a TableRow from the row layout XML
@@ -139,10 +141,100 @@ public class LecturerCreateSessionActivity extends AppCompatActivity {
                         attendanceStatusButton.setText(studentInfo[2]);
                         if (studentInfo[2].equals("Present")) {
                             attendanceStatusButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                            attendanceStatusButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // Create a confirmation dialog
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LecturerCreateSessionActivity.this);
+                                    builder.setTitle("Set attendance of " + studentInfo[1] + " to absent?");
+                                    builder.setMessage("Are you sure you want to approve this action?");
+
+                                    // Add a positive button (Yes) and its action
+                                    builder.setPositiveButton("Yes", (dialog, which) -> {
+                                        attendanceStatusButton.setText("Absent");
+                                        attendanceStatusButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_red)));
+                                        courseSession.getStudentAttendanceStatus().put(studentInfo[1], "Absent");
+                                        // Update the attendance status in the database
+                                        sessionRef.child("studentAttendanceStatus").child(studentInfo[1]).setValue("Absent");
+
+                                        Toast.makeText(LecturerCreateSessionActivity.this, "Attendance of " + studentInfo[1] + " has been set to absent.", Toast.LENGTH_LONG).show();
+                                    });
+
+                                    // Add a negative button (No) and its action
+                                    builder.setNegativeButton("No", (dialog, which) -> {
+                                        // Dismiss the dialog (do nothing)
+                                        dialog.dismiss();
+                                    });
+
+                                    // Show the dialog
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                }
+                            });
                         } else if (studentInfo[2].equals("Absent")) {
                             attendanceStatusButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_red)));
+                            attendanceStatusButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // Create a confirmation dialog
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LecturerCreateSessionActivity.this);
+                                    builder.setTitle("Set attendance of " + studentInfo[1] + " to present?");
+                                    builder.setMessage("Are you sure you want to approve this action?");
+
+                                    // Add a positive button (Yes) and its action
+                                    builder.setPositiveButton("Yes", (dialog, which) -> {
+                                        attendanceStatusButton.setText("Present");
+                                        attendanceStatusButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                                        courseSession.getStudentAttendanceStatus().put(studentInfo[1], "Present");
+                                        // Update the attendance status in the database
+                                        sessionRef.child("studentAttendanceStatus").child(studentInfo[1]).setValue("Present");
+
+                                        Toast.makeText(LecturerCreateSessionActivity.this, "Attendance of " + studentInfo[1] + " has been set to present.", Toast.LENGTH_LONG).show();
+                                    });
+
+                                    // Add a negative button (No) and its action
+                                    builder.setNegativeButton("No", (dialog, which) -> {
+                                        // Dismiss the dialog (do nothing)
+                                        dialog.dismiss();
+                                    });
+
+                                    // Show the dialog
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                }
+                            });
                         } else if (studentInfo[2].equals("Late")) {
                             attendanceStatusButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
+                            attendanceStatusButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // Create a confirmation dialog
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LecturerCreateSessionActivity.this);
+                                    builder.setTitle("Set attendance of " + studentInfo[1] + " to absent?");
+                                    builder.setMessage("Are you sure you want to approve this action?");
+
+                                    // Add a positive button (Yes) and its action
+                                    builder.setPositiveButton("Yes", (dialog, which) -> {
+                                        attendanceStatusButton.setText("Absent");
+                                        attendanceStatusButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_red)));
+                                        courseSession.getStudentAttendanceStatus().put(studentInfo[1], "Absent");
+                                        // Update the attendance status in the database
+                                        sessionRef.child("studentAttendanceStatus").child(studentInfo[1]).setValue("Absent");
+
+                                        Toast.makeText(LecturerCreateSessionActivity.this, "Attendance of " + studentInfo[1] + " has been set to absent.", Toast.LENGTH_LONG).show();
+                                    });
+
+                                    // Add a negative button (No) and its action
+                                    builder.setNegativeButton("No", (dialog, which) -> {
+                                        // Dismiss the dialog (do nothing)
+                                        dialog.dismiss();
+                                    });
+
+                                    // Show the dialog
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                }
+                            });
                         }
 
                         // Add the inflated TableRow to the TableLayout
