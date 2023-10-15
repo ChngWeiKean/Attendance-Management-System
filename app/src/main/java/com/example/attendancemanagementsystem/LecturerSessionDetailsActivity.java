@@ -1,5 +1,7 @@
 package com.example.attendancemanagementsystem;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,10 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,6 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +140,16 @@ public class LecturerSessionDetailsActivity extends AppCompatActivity {
                             // Add the inflated TableRow to the TableLayout
                             studentAttendanceTable.addView(row);
                         }
+
+                        Button exportSessionDetailsButton = findViewById(R.id.export_session_details_button);
+                        exportSessionDetailsButton.setEnabled(true);
+                        exportSessionDetailsButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d("Session List", "Export session details to CSV");
+                                exportSessionsToCSV(sessionId, courseCode, courseSession, studentArray);
+                            }
+                        });
                     }
                 });
             }
@@ -236,4 +253,66 @@ public class LecturerSessionDetailsActivity extends AppCompatActivity {
         void onStudentArrayReceived(String[][] studentArray);
     }
 
+    public void exportSessionsToCSV(String sessionId, String courseCode, CourseSession courseSession, String[][] studentArray) {
+        try {
+            // Get the app's data directory
+            File dir = new File(getFilesDir(), "MyApp");
+            Log.d(TAG, "Directory: " + dir.getAbsolutePath());
+
+            if (!dir.exists()) {
+                if (dir.mkdirs()) {
+                    Log.d(TAG, "Directory created successfully");
+                } else {
+                    Log.e(TAG, "Failed to create directory");
+                }
+            }
+
+            // Create a CSV file for sessions in the app's data directory
+            File file = new File(dir, courseSession.getEndTime() + "_" + courseCode + "_" + sessionId + "_session_details_data.csv");
+            FileWriter writer = new FileWriter(file);
+
+            // Define the session details
+            String[] sessionDetails = {"Course Code: " + courseCode, "Session ID: " + sessionId, "Start Time: " + courseSession.getStartTime(), "End Time: " + courseSession.getEndTime()};
+
+            // Write the session details
+            for (String detail : sessionDetails) {
+                writer.append(detail);
+                writer.append(",");
+            }
+            writer.append("\n");
+
+            // Define column names (headers)
+            String[] headers = {"Student Name", "Student ID", "Attendance Status"};
+
+            // Write the header row
+            for (String header : headers) {
+                writer.append(header);
+                writer.append(",");
+            }
+            writer.append("\n");
+
+            // Write the data rows based on the provided studentArray
+            for (String[] studentInfo : studentArray) {
+                for (String info : studentInfo) {
+                    writer.append(info);
+                    writer.append(",");
+                }
+                writer.append("\n");
+            }
+
+            // Close the writer
+            writer.flush();
+            writer.close();
+
+            // Display a success message
+            Toast.makeText(this, "Session details exported successfully!", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "File path: " + file.getAbsolutePath());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle errors, such as file I/O issues
+            // Log error
+            Log.e("File Error", e.getMessage());
+        }
+    }
 }

@@ -27,6 +27,16 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical" />
 
+            <Button
+                android:id="@+id/export_session_details_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:backgroundTint="@color/green"
+                android:fontFamily="@font/font_family"
+                android:text="Export to CSV" />
         </com.google.android.material.appbar.MaterialToolbar>
         <View
             android:layout_width="wrap_content"

@@ -129,15 +129,27 @@ public class StudentViewEventActivity extends AppCompatActivity {
                 TextView dateTextView = findViewById(R.id.date);
                 TextView startTime = findViewById(R.id.start_time_spinner);
                 TextView endTime = findViewById(R.id.end_time_spinner);
+                TextView reasonForRejection = findViewById(R.id.rejection);
+                TextView reasonForRejectionLabel = findViewById(R.id.rejection_label);
                 eventStatus.setText(event.getApprovalStatus());
-                if (userId == event.getUserID()) {
+                if (userId.equals(event.getUserID())) {
                     eventStatus.setVisibility(View.VISIBLE);
                     if (event.getApprovalStatus().equals("Pending")) {
                         eventStatus.setBackgroundColor(getResources().getColor(R.color.purple));
+                        eventStatus.setTextColor(getResources().getColor(R.color.black));
+                        reasonForRejectionLabel.setVisibility(View.GONE);
+                        reasonForRejection.setVisibility(View.GONE);
                     } else if (event.getApprovalStatus().equals("Approved")) {
                         eventStatus.setBackgroundColor(getResources().getColor(R.color.light_green));
+                        eventStatus.setTextColor(getResources().getColor(R.color.black));
+                        reasonForRejectionLabel.setVisibility(View.GONE);
+                        reasonForRejection.setVisibility(View.GONE);
                     } else if (event.getApprovalStatus().equals("Rejected")) {
                         eventStatus.setBackgroundColor(getResources().getColor(R.color.light_red));
+                        eventStatus.setTextColor(getResources().getColor(R.color.black));
+                        reasonForRejectionLabel.setVisibility(View.VISIBLE);
+                        reasonForRejection.setVisibility(View.VISIBLE);
+                        reasonForRejection.setText(snapshot.child("reasonForRejection").getValue(String.class));
                     }
                 }
                 titleEditText.setText(event.getTitle());

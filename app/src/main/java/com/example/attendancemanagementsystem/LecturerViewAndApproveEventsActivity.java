@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -256,23 +257,17 @@ public class LecturerViewAndApproveEventsActivity extends AppCompatActivity {
     }
 
     public void rejectEvent(View view) {
-        // Create a confirmation dialog
+        // Create a custom view by inflating the layout
+        View customView = getLayoutInflater().inflate(R.layout.event_rejection_dialog, null);
+        final EditText rejectionReasonEditText = customView.findViewById(R.id.rejectionReasonEditText);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirm Rejection of Event");
-        builder.setMessage("Are you sure you want to reject this event?");
+        builder.setView(customView)
+                .setTitle("Confirm Rejection of Event")
+                .setMessage("Are you sure you want to reject this event?");
 
         // Add a positive button (Yes) and its action
-        builder.setPositiveButton("Yes", (dialog, which) -> {
-            String eventId = getIntent().getStringExtra("eventID");
-            // Retrieve event from database
-            DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference("events").child(eventId);
-
-            // Update the event's approval status to "Approved"
-            eventRef.child("approvalStatus").setValue("Rejected");
-            Toast.makeText(this, "Event has been approved successfully.", Toast.LENGTH_SHORT).show();
-            // Redirect to lecturer event page
-            startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerEventActivity.class));
-        });
+        builder.setPositiveButton("Yes", null); // Initially set the positive button without a click listener
 
         // Add a negative button (No) and its action
         builder.setNegativeButton("No", (dialog, which) -> {
@@ -283,5 +278,30 @@ public class LecturerViewAndApproveEventsActivity extends AppCompatActivity {
         // Show the dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            if (rejectionReasonEditText.getText().toString().isEmpty()) {
+                rejectionReasonEditText.setError("Please enter a reason for rejection.");
+            } else {
+                rejectionReasonEditText.setError(null);
+                String eventId = getIntent().getStringExtra("eventID");
+                // Retrieve event from the database
+                DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference("events").child(eventId);
+
+                // Update the event's approval status to "Rejected"
+                eventRef.child("approvalStatus").setValue("Rejected");
+
+                String rejectionReason = rejectionReasonEditText.getText().toString();
+                // Save the rejection reason to the database
+                eventRef.child("reasonForRejection").setValue(rejectionReason);
+
+                Toast.makeText(this, "Event has been rejected successfully.", Toast.LENGTH_SHORT).show();
+
+                // Redirect to lecturer event page
+                startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerEventActivity.class));
+                dialog.dismiss(); // Dismiss the dialog only when everything is successful
+            }
+        });
     }
+
 }

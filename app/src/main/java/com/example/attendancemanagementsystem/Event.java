@@ -14,6 +14,7 @@ public class Event {
     private String userID;
     private String approvalStatus;
     private List<String> images;
+    private String reasonForRejection;
 
     public Event() {
     }
@@ -58,6 +59,10 @@ public class Event {
         return approvalStatus;
     }
 
+    public String getReasonForRejection() {
+        return reasonForRejection;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -96,6 +101,10 @@ public class Event {
 
     public void setApprovalStatus(String approvalStatus) {
         this.approvalStatus = approvalStatus;
+    }
+
+    public void setReasonForRejection(String reasonForRejection) {
+        this.reasonForRejection = reasonForRejection;
     }
 
     public void addImage(String image) {
