@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -641,10 +642,11 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Function to export session summary data to a CSV file and allow for download
     public void exportSessionsToCSV(List<List<String>> sessionList, String courseCode) {
         try {
             // Get the app's data directory
-            File dir = new File(getFilesDir(), "MyApp");
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             Log.d(TAG, "Directory: " + dir.getAbsolutePath());
 
             if (!dir.exists()) {
@@ -671,11 +673,13 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
 
             // Write the data rows
             for (List<String> row : sessionList) {
-                // Exclude the "color" element (the fifth element)
-                for (int i = 0; i < 4; i++) {
-                    writer.append(row.get(i));
-                    writer.append(",");
-                }
+                writer.append(formatDateForExcel(row.get(0))); // Date
+                writer.append(",");
+                writer.append(row.get(1)); // Start Time
+                writer.append(",");
+                writer.append(row.get(2)); // End Time
+                writer.append(",");
+                writer.append(formatAttendanceCount(row.get(3))); // Total Attendance Count
                 writer.append("\n");
             }
 
@@ -695,11 +699,11 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
         }
     }
 
-    // Function to export attendance summary data to a CSV file
+    // Function to export attendance summary data to a CSV file and allow for download
     public void exportAttendanceSummaryToCSV(List<List<String>> attendanceSummaryList, String courseCode) {
         try {
-            // Get the app's data directory
-            File dir = new File(getFilesDir(), "MyApp");
+            // Get the external storage directory
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             Log.d(TAG, "Directory: " + dir.getAbsolutePath());
 
             if (!dir.exists()) {
@@ -726,11 +730,11 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
 
             // Write the data rows
             for (List<String> row : attendanceSummaryList) {
-                // Exclude the "color" element (the fifth element)
-                for (int i = 0; i < 3; i++) {
-                    writer.append(row.get(i));
-                    writer.append(",");
-                }
+                writer.append(row.get(0)); // Student Name
+                writer.append(",");
+                writer.append(row.get(1)); // Student ID
+                writer.append(",");
+                writer.append(formatAttendanceCountForSessions(row.get(2))); // Total Attendance Count
                 writer.append("\n");
             }
 
@@ -747,6 +751,39 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
             // Handle errors, such as permission denied or file I/O issues
             // Log error
             Log.e("File Error", e.getMessage());
+        }
+    }
+
+    private String formatDateForExcel(String inputDate) {
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date = outputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return inputDate; // Use the original input if parsing fails
+        }
+    }
+
+    // Helper function to format the attendance count
+    private String formatAttendanceCount(String attendanceCount) {
+        // Assuming attendanceCount is in the format "X / Y"
+        String[] parts = attendanceCount.split(" / ");
+        if (parts.length == 2) {
+            return parts[0] + " of " + parts[1] + " students";
+        } else {
+            return attendanceCount; // Return the original input if the format is not as expected
+        }
+    }
+
+    // Helper function to format the attendance count for all sessions
+    private String formatAttendanceCountForSessions(String attendanceCount) {
+        // Assuming attendanceCount is in the format "X / Y"
+        String[] parts = attendanceCount.split(" / ");
+        if (parts.length == 2) {
+            return parts[0] + " of " + parts[1] + " sessions";
+        } else {
+            return attendanceCount; // Return the original input if the format is not as expected
         }
     }
 }

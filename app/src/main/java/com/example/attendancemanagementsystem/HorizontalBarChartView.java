@@ -47,7 +47,7 @@ public class HorizontalBarChartView extends View {
         int height = getHeight();
 
         // Define the gap between bars
-        int gap = 60; // You can adjust this value
+        int gap = 50; // You can adjust this value
 
         // Calculate bar heights
         int barHeight = (height - 2 * gap) / 4;
@@ -59,7 +59,7 @@ public class HorizontalBarChartView extends View {
         if (recommendedPercentage <= 0 && percentagePresent <= 0 && classAverage <= 0) {
             // Data is empty, display a message
             paint.setColor(Color.BLACK); // Set text color to black
-            paint.setTextSize(50); // Set text size
+            paint.setTextSize(40); // Set text size
             String noDataMessage = "No data available";
             float textWidth = paint.measureText(noDataMessage);
             float textX = (width - textWidth) / 2;
@@ -79,7 +79,7 @@ public class HorizontalBarChartView extends View {
         canvas.drawLine(gap, height - gap, width, height - gap, paint);
 
         // Draw axis labels
-        paint.setTextSize(50); // Set text size for labels
+        paint.setTextSize(40); // Set text size for labels
 
         // Label for y-axis
         String yAxisLabel = "Category";
@@ -100,7 +100,6 @@ public class HorizontalBarChartView extends View {
             // Draw the recommended bar
             paint.setColor(getResources().getColor(R.color.blue));
             canvas.drawRect(gap + 40, gap - 20, (width * recommendedPercentage / 100) - gap, gap + barHeight - 20, paint);
-
         }
 
         if (percentagePresent > 0) {
@@ -117,7 +116,7 @@ public class HorizontalBarChartView extends View {
 
         // Draw percentages inside the bars
         paint.setColor(Color.BLACK); // Set text color to black
-        paint.setTextSize(50); // Set text size
+        paint.setTextSize(40); // Set text size
 
         String recommendedText = String.format("%.0f%%", recommendedPercentage);
         String presentText = String.format("%.0f%%", percentagePresent);
@@ -144,7 +143,7 @@ public class HorizontalBarChartView extends View {
         // Draw percentages at the end of the bars
         canvas.drawText("Recommended", categoryX, categoryYRecommended, paint);
         canvas.drawText("Present", categoryX, categoryYPresent, paint);
-        canvas.drawText("Class Average", categoryX, categoryYClassAverage, paint);
+        canvas.drawText("Average", categoryX, categoryYClassAverage, paint);
 
     }
 

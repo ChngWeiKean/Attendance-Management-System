@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -256,7 +257,7 @@ public class LecturerSessionDetailsActivity extends AppCompatActivity {
     public void exportSessionsToCSV(String sessionId, String courseCode, CourseSession courseSession, String[][] studentArray) {
         try {
             // Get the app's data directory
-            File dir = new File(getFilesDir(), "MyApp");
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             Log.d(TAG, "Directory: " + dir.getAbsolutePath());
 
             if (!dir.exists()) {
@@ -268,17 +269,29 @@ public class LecturerSessionDetailsActivity extends AppCompatActivity {
             }
 
             // Create a CSV file for sessions in the app's data directory
-            File file = new File(dir, courseSession.getEndTime() + "_" + courseCode + "_" + sessionId + "_session_details_data.csv");
+            File file = new File(dir, courseCode + "_" + sessionId + "_session_details_data.csv");
             FileWriter writer = new FileWriter(file);
 
             // Define the session details
-            String[] sessionDetails = {"Course Code: " + courseCode, "Session ID: " + sessionId, "Start Time: " + courseSession.getStartTime(), "End Time: " + courseSession.getEndTime()};
+            String[] sessionDetails = {"Course Code", "Session ID", "Start Time", "End Time"};
+
 
             // Write the session details
             for (String detail : sessionDetails) {
                 writer.append(detail);
                 writer.append(",");
             }
+            writer.append("\n");
+
+            writer.append(courseCode);
+            writer.append(",");
+            writer.append(sessionId);
+            writer.append(",");
+            writer.append(courseSession.getStartTime());
+            writer.append(",");
+            writer.append(courseSession.getEndTime());
+
+            writer.append("\n");
             writer.append("\n");
 
             // Define column names (headers)

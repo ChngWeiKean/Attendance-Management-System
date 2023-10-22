@@ -45,7 +45,7 @@ public class BarChartView extends View {
         int width = getWidth();
         int height = getHeight();
         int barWidthInDp = 25; // Set the desired bar width in dp
-        int barSpacingInDp = 15; // Set the desired spacing between bars in dp
+        int barSpacingInDp = 20; // Set the desired spacing between bars in dp
         float density = getResources().getDisplayMetrics().density;
         int maxBarWidth = (int) (barWidthInDp * density); // Convert dp to pixels
         int maxBarSpacing = (int) (barSpacingInDp * density); // Convert dp to pixels
@@ -130,7 +130,7 @@ public class BarChartView extends View {
             float centerX = left + (maxBarWidth / 2f) - 30;
             float centerY = height - 50; // Adjust this value to position the date labels below the x-axis
 
-            barPaint.setTextSize(40); // Text size for date labels
+            barPaint.setTextSize(30); // Text size for date labels
 
             // Rotate the canvas before drawing the text
             canvas.save();
