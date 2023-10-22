@@ -261,6 +261,7 @@ public class StudentCourseDetailsActivity extends AppCompatActivity {
                         // All database operations completed, now update the PieChartView
                         // Find percentage of attendance
                         float percentagePresent = (float) totalPresent[0] / (totalPresent[0] + totalLate[0] + totalAbsent[0]) * 100;
+                        float percentagePresentAndLate = (float) (totalPresent[0] + totalLate[0]) / (totalPresent[0] + totalLate[0] + totalAbsent[0]) * 100;
                         float percentageLate = (float) totalLate[0] / (totalPresent[0] + totalLate[0] + totalAbsent[0]) * 100;
                         float percentageAbsent = (float) totalAbsent[0] / (totalPresent[0] + totalLate[0] + totalAbsent[0]) * 100;
                         float classAverage = (float) totalClassPresent[0] / (totalClassPresent[0] + totalClassAbsent[0]) * 100;
@@ -288,27 +289,29 @@ public class StudentCourseDetailsActivity extends AppCompatActivity {
 
                         TextView attendanceScoreTitle = findViewById(R.id.attendance_score_title);
 
-                        if (percentagePresent >= recommendedPercentage) {
+                        if (percentagePresentAndLate >= recommendedPercentage) {
                             attendanceScoreTitle.setText("Good Attendance Score!");
                             attendanceScoreTitle.setTextColor(getResources().getColor(R.color.light_green));
-                        } else if (percentagePresent >= classAverage && percentagePresent < recommendedPercentage) {
+                        } else if (percentagePresentAndLate == 0) {
+                            attendanceScoreTitle.setText("No Attendance Score!");
+                            attendanceScoreTitle.setTextColor(getResources().getColor(R.color.light_red));
+                        } else if (percentagePresentAndLate >= classAverage) {
                             attendanceScoreTitle.setText("Attendance Score Above Average!");
                             attendanceScoreTitle.setTextColor(getResources().getColor(R.color.orange));
-                        } else if (percentagePresent < classAverage) {
+                        } else if (percentagePresentAndLate < classAverage) {
                             attendanceScoreTitle.setText("Attendance Score Below Average!");
-                            attendanceScoreTitle.setTextColor(getResources().getColor(R.color.light_red));
-                        } else if (percentagePresent == 0) {
-                            attendanceScoreTitle.setText("No Attendance Score!");
                             attendanceScoreTitle.setTextColor(getResources().getColor(R.color.light_red));
                         }
 
                         HorizontalBarChartView horizontalBarChartView = findViewById(R.id.horizontal_bar_chart);
-                        horizontalBarChartView.setData(recommendedPercentage, percentagePresent + percentageLate, classAverage);
+                        horizontalBarChartView.setData(recommendedPercentage, percentagePresentAndLate, classAverage);
 
                         // Log classAverage and totalPresents and totalStudents
                         Log.d("Total Presents", "Total Presents: " + totalClassPresent[0]);
                         Log.d("Total Students", "Total Absents: " + totalClassAbsent[0]);
+                        Log.d("Self", "Class Average: " + classAverage);
                         Log.d("Class Average", "Class Average: " + classAverage);
+                        Log.d("Total Presents", "Present Percentage: " + percentagePresent);
                     }
                 }
 

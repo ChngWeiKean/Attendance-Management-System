@@ -133,7 +133,7 @@ public class PieChartView extends View {
         paint.setTypeface(typeface);
 
         paint.setColor(Color.BLACK); // You can change the text color
-        paint.setTextSize(50); // You can change the text size
+        paint.setTextSize(40); // You can change the text size
         canvas.drawText(label, x + legendSize + legendPadding, y + legendSize, paint);
     }
 }
