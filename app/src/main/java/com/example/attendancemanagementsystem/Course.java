@@ -11,6 +11,7 @@ public class Course {
     private List<String> students;
     private Boolean hasOngoingSession;
     private List<String> courseSessions;
+    private String courseImageURL;
 
     public String getCourseCode() {
         return courseCode;
@@ -39,6 +40,8 @@ public class Course {
     public List<String> getCourseSessions() {
         return courseSessions;
     }
+
+    public String getCourseImageURL() { return courseImageURL; }
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
@@ -74,6 +77,10 @@ public class Course {
 
     public void setCourseSessions(List<String> courseSessions) {
         this.courseSessions = courseSessions;
+    }
+
+    public void setCourseImageURL(String courseImageURL) {
+        this.courseImageURL = courseImageURL;
     }
 
     public void addCourseSession(String courseSessionID) {

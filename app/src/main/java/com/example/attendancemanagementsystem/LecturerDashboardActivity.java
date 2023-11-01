@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,11 +115,13 @@ public class LecturerDashboardActivity extends AppCompatActivity {
                                     // Extract course codes and names from the database.
                                     String courseCode = courseDetailsSnapshot.child("courseCode").getValue(String.class);
                                     String courseName = courseDetailsSnapshot.child("courseName").getValue(String.class);
+                                    String courseImageURL = courseDetailsSnapshot.child("courseImage").getValue(String.class);
 
                                     // Create a Course object and add it to the list.
                                     Course course = new Course();
                                     course.setCourseCode(courseCode);
                                     course.setCourseName(courseName);
+                                    course.setCourseImageURL(courseImageURL);
                                     courseList.add(course);
 
                                     // Set up the RecyclerView when all courses have been added to the list.
