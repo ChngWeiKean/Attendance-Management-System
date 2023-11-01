@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -31,6 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +46,15 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     List<CourseSchedule> newScheduleList = new ArrayList<>();
+    private static final int PICK_IMAGE_REQUEST = 1;
     int count = 0;
     String courseIdString;
     String courseNameString;
     DatabaseReference courseSchedulesRef;
     DatabaseReference coursesRef;
+
+    Uri imageUri;
+
     private boolean timeConflictToastShown = false;
 
     @Override
@@ -116,6 +125,16 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
         courseSchedulesRef = FirebaseDatabase.getInstance().getReference("course_schedules");
 
         fetchCourseSchedule(courseIdString);
+
+        Button uploadButton = findViewById(R.id.edit_upload_button);
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+            }
+        });
     }
 
     private void fetchCourseSchedule(String courseId) {
@@ -412,6 +431,8 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
         Log.d(TAG, "Validating edit course");
         EditText courseCode = findViewById(R.id.edit_course_code);
         EditText courseName = findViewById(R.id.edit_course_name);
+
+        String courseCodeString = courseCode.getText().toString();
         // Check if course code and course name are empty
         if (courseCode.getText().toString().isEmpty() || courseName.getText().toString().isEmpty()) {
             Toast.makeText(LecturerEditCourseActivity.this, "Course code or course name cannot be empty!", Toast.LENGTH_LONG).show();
@@ -476,6 +497,7 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
                             } else {
                                 // No time conflicts, create the new course
                                 saveEditCourse(view);
+                                uploadImageToFirebase(imageUri, courseCodeString);
                             }
 
                         }); // End of fetchNewCourseSchedules
@@ -706,6 +728,46 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            imageUri = data.getData();
+
+            ImageView courseImageView = findViewById(R.id.edit_course_image_view);
+            courseImageView.setImageURI(imageUri);
+            courseImageView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void uploadImageToFirebase(Uri imageUri, String courseCode) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        StorageReference courseImageRef = storageRef.child("courseImage");
+
+        String filename = courseCode + ".jpg";
+
+        StorageReference imageRef = courseImageRef.child(filename);
+
+        UploadTask uploadTask = imageRef.putFile(imageUri);
+
+        uploadTask.addOnSuccessListener(taskSnapshot -> {
+            imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                saveCourseImageURLToDatabase(uri.toString(), courseCode);
+            });
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Image upload failed.", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void saveCourseImageURLToDatabase(String imageURL, String courseCode) {
+        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("courses");
+
+        coursesRef.child(courseCode).child("courseImage").setValue(imageURL);
     }
 }
 

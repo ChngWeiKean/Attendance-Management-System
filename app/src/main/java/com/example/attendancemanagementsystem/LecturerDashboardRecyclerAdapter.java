@@ -3,8 +3,10 @@ package com.example.attendancemanagementsystem;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ImageButton;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +37,7 @@ public class LecturerDashboardRecyclerAdapter extends RecyclerView.Adapter<Lectu
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView courseCodeTextView;
         TextView courseNameTextView;
+        ImageView courseImageView;
         ImageButton editButton;
         ImageButton deleteButton;
 
@@ -42,6 +45,7 @@ public class LecturerDashboardRecyclerAdapter extends RecyclerView.Adapter<Lectu
             super(itemView);
             courseCodeTextView = itemView.findViewById(R.id.lecturer_dashboard_card_course_id);
             courseNameTextView = itemView.findViewById(R.id.lecturer_dashboard_card_course_name);
+            courseImageView = itemView.findViewById(R.id.lecturer_dashboard_card_image);
 
             editButton = itemView.findViewById(R.id.lecturer_dashboard_card_edit_button);
             deleteButton = itemView.findViewById(R.id.lecturer_dashboard_card_delete_button);
@@ -97,6 +101,12 @@ public class LecturerDashboardRecyclerAdapter extends RecyclerView.Adapter<Lectu
         Course course = courseList.get(position);
         holder.courseCodeTextView.setText(course.getCourseCode());
         holder.courseNameTextView.setText(course.getCourseName());
+
+        if (course.getCourseImageURL() != null && !course.getCourseImageURL().isEmpty()) {
+            Picasso.get().load(course.getCourseImageURL()).into(holder.courseImageView);
+        } else {
+            holder.courseImageView.setImageResource(R.drawable.dashboard_card_image);
+        }
     }
 
     // Return the size of your dataset.
