@@ -3,10 +3,13 @@ package com.example.attendancemanagementsystem;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -30,11 +33,13 @@ public class StudentDashboardRecyclerAdapter extends RecyclerView.Adapter<Studen
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView courseCodeTextView;
         TextView courseNameTextView;
+        ImageView courseImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             courseCodeTextView = itemView.findViewById(R.id.student_dashboard_card_course_id);
             courseNameTextView = itemView.findViewById(R.id.student_dashboard_card_course_name);
+            courseImageView = itemView.findViewById(R.id.student_dashboard_card_image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,6 +68,12 @@ public class StudentDashboardRecyclerAdapter extends RecyclerView.Adapter<Studen
         Course course = courseList.get(position);
         holder.courseCodeTextView.setText(course.getCourseCode());
         holder.courseNameTextView.setText(course.getCourseName());
+
+        if (course.getCourseImageURL() != null && !course.getCourseImageURL().isEmpty()) {
+            Picasso.get().load(course.getCourseImageURL()).into(holder.courseImageView);
+        } else {
+            holder.courseImageView.setImageResource(R.drawable.dashboard_card_image);
+        }
     }
 
     // Return the size of your dataset.
