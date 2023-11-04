@@ -115,11 +115,13 @@ public class StudentDashboardActivity extends AppCompatActivity {
                                     // Extract course codes and names from the database.
                                     String courseCode = courseDetailsSnapshot.child("courseCode").getValue(String.class);
                                     String courseName = courseDetailsSnapshot.child("courseName").getValue(String.class);
+                                    String courseImageURL = courseDetailsSnapshot.child("courseImage").getValue(String.class);
 
                                     // Create a Course object and add it to the list.
                                     Course course = new Course();
                                     course.setCourseCode(courseCode);
                                     course.setCourseName(courseName);
+                                    course.setCourseImageURL(courseImageURL);
                                     courseList.add(course);
 
                                     // Set up the RecyclerView when all courses have been added to the list.
