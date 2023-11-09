@@ -14,27 +14,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class StudentProfileSettings extends AppCompatActivity {
+public class StudentProfileSettingsActivity extends AppCompatActivity {
 
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     private SharedPreferences sharedPreferences;
     private DatabaseReference databaseReference;
     private DatabaseReference userRef;
-    private EditText nameEditText;
+    private EditText usernameEditText;
     private EditText emailEditText;
     private EditText currentPasswordEditText;
     private EditText newPasswordEditText;
@@ -60,19 +56,19 @@ public class StudentProfileSettings extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
                 if (menuItem.getItemId() == R.id.menu_dashboard) {
-                    startActivity(new Intent(StudentProfileSettings.this, StudentDashboardActivity.class));
+                    startActivity(new Intent(StudentProfileSettingsActivity.this, StudentDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
-                    startActivity(new Intent(StudentProfileSettings.this, StudentEventActivity.class));
+                    startActivity(new Intent(StudentProfileSettingsActivity.this, StudentEventActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
-                    startActivity(new Intent(StudentProfileSettings.this, StudentQRScannerActivity.class));
+                    startActivity(new Intent(StudentProfileSettingsActivity.this, StudentQRScannerActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_user_profile) {
-                    startActivity(new Intent(StudentProfileSettings.this, StudentProfileSettings.class));
+                    startActivity(new Intent(StudentProfileSettingsActivity.this, StudentProfileSettingsActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference
                     getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().clear().apply();
                     // Redirect to login page
-                    startActivity(new Intent(StudentProfileSettings.this, MainActivity.class));
+                    startActivity(new Intent(StudentProfileSettingsActivity.this, MainActivity.class));
                 }
                 return true;
             }
@@ -87,7 +83,7 @@ public class StudentProfileSettings extends AppCompatActivity {
         currentPasswordEditText = findViewById(R.id.student_edit_profile_current_password);
         newPasswordEditText = findViewById(R.id.student_edit_profile_new_password);
         confirmPasswordEditText = findViewById(R.id.student_edit_profile_confirm_new_password);
-        nameEditText = findViewById(R.id.student_edit_profile_username);
+        usernameEditText = findViewById(R.id.student_edit_profile_username);
         emailEditText = findViewById(R.id.student_edit_profile_email);
         applyButton = findViewById(R.id.student_edit_profile_apply_button);
 
@@ -104,11 +100,11 @@ public class StudentProfileSettings extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String currentName = dataSnapshot.child("name").getValue(String.class);
+                    String currentUsername = dataSnapshot.child("username").getValue(String.class);
                     String currentEmail = dataSnapshot.child("email").getValue(String.class);
 
                     // Set the EditTexts with the current name and email
-                    nameEditText.setText(currentName);
+                    usernameEditText.setText(currentUsername);
                     emailEditText.setText(currentEmail);
                 }
             }
@@ -125,7 +121,7 @@ public class StudentProfileSettings extends AppCompatActivity {
                 final String currentPassword = currentPasswordEditText.getText().toString();
                 final String newPassword = newPasswordEditText.getText().toString();
                 final String confirmNewPassword = confirmPasswordEditText.getText().toString();
-                final String newName = nameEditText.getText().toString();
+                final String newUsername = usernameEditText.getText().toString();
                 final String newEmail = emailEditText.getText().toString();
 
                 userRef.child("password").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,13 +132,13 @@ public class StudentProfileSettings extends AppCompatActivity {
                             boolean isPasswordValid = currentPassword.equals(storedPassword);
 
                             if (isPasswordValid) {
-                                if (!newName.isEmpty() && !newEmail.isEmpty()) {
-                                    verifyName(newName, newEmail, newPassword, confirmNewPassword);
+                                if (!newUsername.isEmpty() && !newEmail.isEmpty()) {
+                                    verifyUsername(newUsername, newEmail, newPassword, confirmNewPassword);
                                 } else {
-                                    Toast.makeText(StudentProfileSettings.this, "Name and email cannot be empty", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(StudentProfileSettingsActivity.this, "Username and email cannot be empty", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(StudentProfileSettings.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(StudentProfileSettingsActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -156,14 +152,14 @@ public class StudentProfileSettings extends AppCompatActivity {
         });
     }
 
-    private void verifyName(final String newName, final String newEmail, final String newPassword, final String confirmNewPassword) {
-        userRef.orderByChild("name").equalTo(newName).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void verifyUsername(final String newUsername, final String newEmail, final String newPassword, final String confirmNewPassword) {
+        userRef.orderByChild("username").equalTo(newUsername).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot nameSnapshot) {
                 if (nameSnapshot.exists()) {
-                    Toast.makeText(StudentProfileSettings.this, "Name already exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentProfileSettingsActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
                 } else {
-                    verifyEmail(newName, newEmail, newPassword, confirmNewPassword);
+                    verifyEmail(newUsername, newEmail, newPassword, confirmNewPassword);
                 }
             }
 
@@ -174,15 +170,15 @@ public class StudentProfileSettings extends AppCompatActivity {
         });
     }
 
-    private void verifyEmail(final String newName, final String newEmail, final String newPassword, final String confirmNewPassword) {
+    private void verifyEmail(final String newUsername, final String newEmail, final String newPassword, final String confirmNewPassword) {
         if (isValidEmail(newEmail)) {
             userRef.orderByChild("email").equalTo(newEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot emailSnapshot) {
                     if (emailSnapshot.exists()) {
-                        Toast.makeText(StudentProfileSettings.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StudentProfileSettingsActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
                     } else {
-                        verifyPassword(newName, newEmail, newPassword, confirmNewPassword);
+                        verifyPassword(newUsername, newEmail, newPassword, confirmNewPassword);
                     }
                 }
 
@@ -192,21 +188,21 @@ public class StudentProfileSettings extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(StudentProfileSettings.this, "Invalid email format", Toast.LENGTH_SHORT).show();
+            Toast.makeText(StudentProfileSettingsActivity.this, "Invalid email format", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void verifyPassword(final String newName, final String newEmail, final String newPassword, final String confirmNewPassword) {
+    private void verifyPassword(final String newUsername, final String newEmail, final String newPassword, final String confirmNewPassword) {
         if (!newPassword.isEmpty() && !confirmNewPassword.isEmpty()) {
             if (newPassword.equals(confirmNewPassword)) {
                 userRef.child("password").setValue(newPassword);
             } else {
-                Toast.makeText(StudentProfileSettings.this, "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StudentProfileSettingsActivity.this, "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
             }
         }
-        updateName(newName);
+        updateUsername(newUsername);
         updateEmail(newEmail);
-        Toast.makeText(StudentProfileSettings.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(StudentProfileSettingsActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
     }
 
     private boolean isValidEmail(String email) {
@@ -215,8 +211,8 @@ public class StudentProfileSettings extends AppCompatActivity {
         return email.matches(studentPattern);
     }
 
-    private void updateName(String newName) {
-        userRef.child("name").setValue(newName);
+    private void updateUsername(String newUsername) {
+        userRef.child("username").setValue(newUsername);
     }
 
     private void updateEmail(String newEmail) {

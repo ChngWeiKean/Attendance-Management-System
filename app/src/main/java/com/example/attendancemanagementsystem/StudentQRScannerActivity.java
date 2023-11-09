@@ -60,6 +60,8 @@ public class StudentQRScannerActivity extends AppCompatActivity implements Barco
                     startActivity(new Intent(StudentQRScannerActivity.this, StudentEventActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_qr_scanner) {
                     startActivity(new Intent(StudentQRScannerActivity.this, StudentQRScannerActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_user_profile) {
+                    startActivity(new Intent(StudentQRScannerActivity.this, StudentProfileSettingsActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference

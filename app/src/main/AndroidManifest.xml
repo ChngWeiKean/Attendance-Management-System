@@ -72,6 +72,10 @@
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
         <activity
+            android:name=".StudentProfileSettingsActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
             android:name=".LecturerDashboardActivity"
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
@@ -105,6 +109,10 @@
         </activity>
         <activity
             android:name=".LecturerSessionDetailsActivity"
+            android:theme="@style/Theme.AttendanceManagementSystem">
+        </activity>
+        <activity
+            android:name=".LecturerProfileSettingsActivity"
             android:theme="@style/Theme.AttendanceManagementSystem">
         </activity>
 <!--        <activity-->
