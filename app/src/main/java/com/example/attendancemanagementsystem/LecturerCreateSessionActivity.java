@@ -73,6 +73,8 @@ public class LecturerCreateSessionActivity extends AppCompatActivity {
                     startActivity(new Intent(LecturerCreateSessionActivity.this, LecturerDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
                     startActivity(new Intent(LecturerCreateSessionActivity.this, LecturerEventActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_user_profile) {
+                    startActivity(new Intent(LecturerCreateSessionActivity.this, LecturerProfileSettingsActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference

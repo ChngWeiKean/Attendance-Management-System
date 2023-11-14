@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".StudentProfileSettings">
+    tools:context=".StudentProfileSettingsActivity">
 
     <LinearLayout
         android:id="@+id/home_content"
@@ -100,6 +100,7 @@
                     android:background="@drawable/card_shape"
                     android:drawableLeft="@drawable/lock_icon"
                     android:drawablePadding="8dp"
+                    android:inputType="textPassword"
                     android:hint="Current Password"
                     android:padding="8dp"
                     android:textColor="@color/black"
@@ -115,6 +116,7 @@
                     android:background="@drawable/card_shape"
                     android:drawableLeft="@drawable/lock_icon"
                     android:drawablePadding="8dp"
+                    android:inputType="textPassword"
                     android:hint="New Password"
                     android:padding="8dp"
                     android:textColor="@color/black"
@@ -130,6 +132,7 @@
                     android:background="@drawable/card_shape"
                     android:drawableLeft="@drawable/lock_icon"
                     android:drawablePadding="8dp"
+                    android:inputType="textPassword"
                     android:hint="Confirm New Password"
                     android:padding="8dp"
                     android:textColor="@color/black"

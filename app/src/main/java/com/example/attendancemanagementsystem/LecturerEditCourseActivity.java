@@ -80,10 +80,8 @@ public class LecturerEditCourseActivity extends AppCompatActivity {
                     startActivity(new Intent(LecturerEditCourseActivity.this, LecturerDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
                     startActivity(new Intent(LecturerEditCourseActivity.this, LecturerEventActivity.class));
-                    /*
                 } else if (menuItem.getItemId() == R.id.menu_user_profile) {
-                    startActivity(new Intent(StudentDashboardActivity.this, StudentProfileActivity.class));
-                     */
+                    startActivity(new Intent(LecturerEditCourseActivity.this, LecturerProfileSettingsActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference

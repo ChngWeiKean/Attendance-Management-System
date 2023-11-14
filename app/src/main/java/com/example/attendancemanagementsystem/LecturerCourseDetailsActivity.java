@@ -76,6 +76,8 @@ public class LecturerCourseDetailsActivity extends AppCompatActivity {
                     startActivity(new Intent(LecturerCourseDetailsActivity.this, LecturerDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
                     startActivity(new Intent(LecturerCourseDetailsActivity.this, LecturerEventActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_user_profile) {
+                    startActivity(new Intent(LecturerCourseDetailsActivity.this, LecturerProfileSettingsActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference

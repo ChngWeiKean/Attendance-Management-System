@@ -69,6 +69,8 @@ public class LecturerViewAndApproveEventsActivity extends AppCompatActivity {
                     startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerDashboardActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_events) {
                     startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerEventActivity.class));
+                } else if (menuItem.getItemId() == R.id.menu_user_profile) {
+                    startActivity(new Intent(LecturerViewAndApproveEventsActivity.this, LecturerProfileSettingsActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_logout) {
                     // Implement logout
                     // Clear the "Remember Me" preference
