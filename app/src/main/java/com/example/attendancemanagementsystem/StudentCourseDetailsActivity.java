@@ -175,7 +175,7 @@ public class StudentCourseDetailsActivity extends AppCompatActivity {
         // Use a counter to track completion of database operations
         AtomicInteger completionCounter = new AtomicInteger(sessionIDs.size());
 
-        Collections.sort(sessionIDs, Collections.reverseOrder());
+        Collections.reverse(sessionIDs);
         // Define sessionList as a 2D list of strings
         List<List<String>> sessionList = new ArrayList<>();
         final int[] totalPresent = {0};
