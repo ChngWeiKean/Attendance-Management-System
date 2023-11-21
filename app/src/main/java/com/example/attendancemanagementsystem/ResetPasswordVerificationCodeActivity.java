@@ -14,6 +14,13 @@ public class ResetPasswordVerificationCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reset_password_verification);
+
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectBackToForgotPassword();
+            }
+        });
     }
 
     public void verifyCode(View view) {
@@ -38,7 +45,7 @@ public class ResetPasswordVerificationCodeActivity extends AppCompatActivity {
         }
     }
 
-    public void redirectBack() {
+    public void redirectBackToForgotPassword() {
         // Redirect back to the login page
         startActivity(new Intent(ResetPasswordVerificationCodeActivity.this, ForgotPasswordActivity.class));
     }

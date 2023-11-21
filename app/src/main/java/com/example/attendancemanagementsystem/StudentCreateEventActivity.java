@@ -282,23 +282,33 @@ public class StudentCreateEventActivity extends AppCompatActivity {
 
         // Check if the events node exists in the database
         DatabaseReference eventsRef = FirebaseDatabase.getInstance().getReference("events");
-        // Check how many children does event node has, the event ID will start from e0001 onwards
+        // Check how many children does the events node has, and find the maximum event ID
         eventsRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 int count = 0;
-                for (DataSnapshot ignored : task.getResult().getChildren()) {
+                int maxEventId = 0;
+
+                for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
                     count++;
+                    // Get the numeric part of the event ID and compare with the current max
+                    int eventIdNumber = Integer.parseInt(dataSnapshot.getKey().substring(1));
+                    maxEventId = Math.max(maxEventId, eventIdNumber);
                 }
-                // Generate the event ID
-                String eventID = "e" + String.format("%04d", count + 1);
+
+                // Generate the new event ID
+                String eventID = "e" + String.format("%04d", maxEventId + 1);
+
                 event.setEventID(eventID);
+
                 // Save the event to the database
                 eventsRef.child(eventID).setValue(event);
-                // Save the images to database
+
+                // Save the images to the database
                 if (!selectedImageUris.isEmpty()) {
                     // Call the function to upload images to Firebase Storage
                     uploadImagesToFirebase(selectedImageUris, eventID);
                 }
+
                 Toast.makeText(this, "Created event successfully!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(StudentCreateEventActivity.this, StudentEventActivity.class));
             }
